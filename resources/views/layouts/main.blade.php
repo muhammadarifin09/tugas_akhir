@@ -4,37 +4,43 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>@yield('title', 'JURAGAN 96 RESTO')</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
 
+  <!-- ✅ Font Awesome aktif dan stabil -->
+  <link
+    rel="stylesheet"
+    href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.6.0/css/all.min.css"
+  />
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
   <style>
     body { margin: 0; padding: 0; color: white; }
     .btn-custom { background-color: #ff9900; color: white; }
     .btn-custom:hover { background-color: #cc7a00; color: white; }
 
     .hero {
-    height: 100vh;
-    background-image: url('{{ asset('images/bg-hero.jpg') }}'); /* ganti sesuai gambar kamu */
-    background-size: cover;
-    background-position: center;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: white;
-    text-align: center;
-  }
+      height: 100vh;
+      background-image: url('{{ asset('images/bg-hero.jpg') }}');
+      background-size: cover;
+      background-position: center;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      text-align: center;
+    }
 
-  .hero-content h1 {
-    font-weight: 700;
-    text-shadow: 2px 2px 8px rgba(0,0,0,0.6);
-  }
+    .hero-content h1 {
+      font-weight: 700;
+      text-shadow: 2px 2px 8px rgba(0,0,0,0.6);
+    }
 
-  .about {
-    background-color: #222;
-    padding: 60px 0;
-  }
+    .about {
+      background-color: #222;
+      padding: 60px 0;
+    }
   </style>
-  
 </head>
+
 <body>
 
   <!-- Navbar -->
