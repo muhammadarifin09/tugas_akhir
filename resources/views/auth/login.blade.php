@@ -154,31 +154,19 @@
         </div>
 
         <div class="d-flex justify-content-between mb-3 flex-wrap">
-          <div>
-            <input type="checkbox" name="remember" id="remember_me">
-            <label for="remember_me">Remember me</label>
-          </div>
           @if (Route::has('password.request'))
-              <a href="{{ route('password.request') }}" class="text-warning">Forgot Password?</a>
+              <a href="{{ route('password.request') }}" class="text-warning">Lupa Password?</a>
           @endif
         </div>
 
         <button type="submit" class="btn btn-login btn-lg">Sign in</button>
       </form>
 
-      <!-- Social Login -->
-      <div class="text-center mt-4">
-        <p>or continue with</p>
-        <div class="d-flex justify-content-center flex-wrap">
-          <a href="#" class="social-btn"><img src="{{ asset('img/google.png') }}" alt="Google"></a>
-          <a href="#" class="social-btn"><img src="{{ asset('img/github.png') }}" alt="Github"></a>
-          <a href="#" class="social-btn"><img src="{{ asset('img/facebook.png') }}" alt="Facebook"></a>
-        </div>
-      </div>
+
 
       <!-- Register -->
       <div class="text-center register-link">
-        Don’t have an account yet? <a href="{{ route('register') }}">Register for free</a>
+        Belum punya akun? <a href="{{ route('register') }}">Daftar sekarang</a>
       </div>
     </div>
   </div>

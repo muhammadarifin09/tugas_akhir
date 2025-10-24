@@ -38,50 +38,67 @@
 <body>
 
   <!-- Navbar -->
-  <nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow">
-    <div class="container">
-      <a class="navbar-brand fw-bold" href="#">JURAGAN 96 RESTO</a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-              data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false"
-              aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-      </button>
+  <!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow">
+  <div class="container">
+    <a class="navbar-brand fw-bold" href="#">JURAGAN 96 RESTO</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+            data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false"
+            aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
 
-        <div class="collapse navbar-collapse" id="navbarNav">
-          <ul class="navbar-nav ms-auto">
-            <li class="nav-item"><a class="nav-link {{ request()->routeIs('beranda') ? 'active' : '' }}" href="{{ route('beranda') }}">Home</a></li>
-            <li class="nav-item"><a class="nav-link" href="#about">About</a></li>
-            <li class="nav-item"><a class="nav-link" href="#menu">Menu</a></li>
-            <li class="nav-item"><a class="nav-link {{ request()->routeIs('daftar.meja') ? 'active' : '' }}" href="{{ route('daftar.meja') }}">Daftar Meja</a>
-            <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto">
 
-            @auth
-              @if(Auth::user()->role == 'pelanggan')
-                <li class="nav-item">
-                  <a class="nav-link {{ request()->routeIs('pelanggan.pesanan') ? 'active' : '' }}" href="{{ route('pelanggan.pesanan') }}">
-                    Pesanan Saya
-                  </a>
-                </li>
-              @endif
-            @endauth
-          </ul>
+          <li class="nav-item">
+            <a class="nav-link {{ request()->routeIs('beranda') ? 'active' : '' }}"
+               href="{{ route('beranda') }}">Beranda</a>
+          </li>
 
-          {{-- Kondisi Auth --}}
+          <li class="nav-item">
+            <a class="nav-link" href="#about">Tentang</a>
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link {{ request()->routeIs('pesan') ? 'active' : '' }}"
+              href="{{ route('pesan') }}">Pesan</a>
+          </li>
+
+
+          <!-- ✅ Merge Menu + Meja -->
+          <li class="nav-item">
+            <a class="nav-link {{ request()->routeIs('menu-meja') ? 'active' : '' }}"
+               href="{{ route('menu-meja') }}">Menu & Meja</a>
+          </li>
+
           @auth
-              <span class="navbar-text text-white ms-3">
-                  Halo, {{ Auth::user()->name }}!
-              </span>
-              <form action="{{ route('logout') }}" method="POST" class="ms-3">
-                  @csrf
-                  <button type="submit" class="btn btn-danger">Logout</button>
-              </form>
-          @else
-              <a href="{{ route('login') }}" class="btn btn-custom ms-3">Login</a>
-              <a href="{{ route('register') }}" class="btn btn-outline-light ms-2">Register</a>
+            @if(Auth::user()->role == 'pelanggan')
+              <li class="nav-item">
+                <a class="nav-link {{ request()->routeIs('pelanggan.pesanan') ? 'active' : '' }}"
+                   href="{{ route('pelanggan.pesanan') }}">Riwayat Pesanan</a>
+              </li>
+            @endif
           @endauth
-        </div>
-    </div>
-  </nav>
+        </ul>
+
+        {{-- Kondisi Auth --}}
+        @auth
+            <span class="navbar-text text-white ms-3">
+                Halo, {{ Auth::user()->name }}!
+            </span>
+            <form action="{{ route('logout') }}" method="POST" class="ms-3">
+                @csrf
+                <button type="submit" class="btn btn-danger">Logout</button>
+            </form>
+        @else
+            <a href="{{ route('login') }}" class="btn btn-custom ms-3">Login</a>
+            <a href="{{ route('register') }}" class="btn btn-outline-light ms-2">Register</a>
+        @endauth
+      </div>
+  </div>
+</nav>
+
 
   <!-- Konten halaman -->
   <main>
@@ -99,6 +116,10 @@
   </footer>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11">
+  
+  </script>
+  
 </body>
 </html>
 

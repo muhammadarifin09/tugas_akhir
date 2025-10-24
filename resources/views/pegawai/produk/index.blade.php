@@ -129,6 +129,7 @@
             @endforelse
         </tbody>
     </table>
+
 </div>
 
 {{-- Modal Create --}}

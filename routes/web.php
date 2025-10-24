@@ -86,9 +86,18 @@ Route::prefix('pesan')->middleware('auth')->group(function() {
 });
 
 
+Route::middleware('auth')->group(function () {
+    Route::get('/pesan', [PesanController::class, 'index'])->name('pesan');
+    Route::post('/pesan/simpan', [PesanController::class, 'store'])->name('pesan.store');
+});
+
+
+
 use App\Http\Controllers\BerandaController;
 
 Route::get('/', [BerandaController::class, 'index'])->name('beranda');
+
+Route::get('/menu-meja', [BerandaController::class, 'menuMeja'])->name('menu-meja');
 
 
 

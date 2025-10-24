@@ -32,4 +32,13 @@ class BerandaController extends Controller
         // Kirim data ke view
         return view('beranda', compact('produks', 'mejas', 'pesanan'));
     }
+
+        public function menuMeja()
+    {
+        $produks = Produk::all();
+        $mejas = Meja::orderBy('nomor_meja')->get();
+
+        return view('menu_meja', compact('produks', 'mejas'));
+    }
+
 }

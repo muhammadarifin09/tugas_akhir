@@ -108,7 +108,7 @@
 
     <!-- Right Side Form -->
     <div class="register-right">
-      <h2>Register</h2>
+      <h2>Daftar Akun</h2>
 
       <form method="POST" action="{{ route('register') }}">
         @csrf
@@ -163,12 +163,12 @@
           @enderror
         </div>
 
-        <button type="submit" class="btn btn-register btn-lg">Register</button>
+        <button type="submit" class="btn btn-register btn-lg">Daftar</button>
       </form>
 
       <!-- Login Link -->
       <div class="text-center login-link">
-        Already registered? <a href="{{ route('login') }}">Login here</a>
+        Sudah punya akun? <a href="{{ route('login') }}">Login disini</a>
       </div>
     </div>
   </div>
