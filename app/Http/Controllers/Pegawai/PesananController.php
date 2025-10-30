@@ -15,7 +15,7 @@ class PesananController extends Controller
         // ambil pesanan + relasi yang diperlukan
         $pesanan = Pesanan::with(['meja', 'detailPesanan.produk'])
                     ->orderByDesc('id_pesanan')
-                    ->get();
+                    ->paginate(10);
 
         // meja yang tersedia (dipakai di form create)
         $mejas = Meja::where('status', 'tersedia')->get();

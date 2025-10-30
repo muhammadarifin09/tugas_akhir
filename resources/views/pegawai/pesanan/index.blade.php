@@ -6,8 +6,13 @@
 
     <!-- CARD: Daftar Pesanan -->
     <div class="card shadow border-0 mb-5">
-        <div class="card-header bg-primary text-white fw-semibold">
-            <i class="fas fa-clipboard-list me-2"></i> Daftar Pesanan
+        <div class="card-header bg-primary text-white fw-semibold d-flex justify-content-between align-items-center">
+            <div>
+                <i class="fas fa-clipboard-list me-2"></i> Daftar Pesanan
+            </div>
+            <div class="text-light small">
+                Menampilkan {{ $pesanan->count() }} dari {{ $pesanan->total() }} pesanan
+            </div>
         </div>
 
         <div class="card-body bg-light">
@@ -28,7 +33,7 @@
                     <tbody>
                         @forelse ($pesanan as $index => $item)
                             <tr>
-                                <td>{{ $index + 1 }}</td>
+                                <td>{{ $pesanan->firstItem() + $index }}</td>
                                 <td>{{ $item->created_at->format('d M Y H:i') }}</td>
 
                                 {{-- Kolom tipe pesanan --}}
@@ -105,6 +110,54 @@
                     </tbody>
                 </table>
             </div>
+
+            <!-- PAGINATION -->
+            @if($pesanan->hasPages())
+            <div class="d-flex justify-content-between align-items-center mt-4">
+                <div class="text-muted small">
+                    Menampilkan {{ $pesanan->firstItem() }} - {{ $pesanan->lastItem() }} dari {{ $pesanan->total() }} pesanan
+                </div>
+                
+                <nav aria-label="Page navigation">
+                    <ul class="pagination pagination-sm mb-0">
+                        {{-- Previous Page Link --}}
+                        @if($pesanan->onFirstPage())
+                            <li class="page-item disabled">
+                                <span class="page-link">&laquo; Sebelumnya</span>
+                            </li>
+                        @else
+                            <li class="page-item">
+                                <a class="page-link" href="{{ $pesanan->previousPageUrl() }}" rel="prev">&laquo; Sebelumnya</a>
+                            </li>
+                        @endif
+
+                        {{-- Pagination Elements --}}
+                        @foreach ($pesanan->getUrlRange(1, $pesanan->lastPage()) as $page => $url)
+                            @if($page == $pesanan->currentPage())
+                                <li class="page-item active">
+                                    <span class="page-link">{{ $page }}</span>
+                                </li>
+                            @else
+                                <li class="page-item">
+                                    <a class="page-link" href="{{ $url }}">{{ $page }}</a>
+                                </li>
+                            @endif
+                        @endforeach
+
+                        {{-- Next Page Link --}}
+                        @if($pesanan->hasMorePages())
+                            <li class="page-item">
+                                <a class="page-link" href="{{ $pesanan->nextPageUrl() }}" rel="next">Selanjutnya &raquo;</a>
+                            </li>
+                        @else
+                            <li class="page-item disabled">
+                                <span class="page-link">Selanjutnya &raquo;</span>
+                            </li>
+                        @endif
+                    </ul>
+                </nav>
+            </div>
+            @endif
         </div>
     </div>
 

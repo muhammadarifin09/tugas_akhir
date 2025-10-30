@@ -78,6 +78,11 @@ Route::middleware(['auth'])->group(function () {
 });
 
 
+// routes/web.php
+Route::get('/tentang', function () {
+    return view('tentang'); // atau return view('beranda') jika konten tentang ada di beranda
+})->name('tentang');
+
 use App\Http\Controllers\Pelanggan\PemesananController;
 
 Route::prefix('pesan')->middleware('auth')->group(function() {

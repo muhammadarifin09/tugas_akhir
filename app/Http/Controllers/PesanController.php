@@ -27,7 +27,7 @@ class PesanController extends Controller
         'jumlah' => 'required|array|min:1',
         'jumlah.*' => 'integer|min:1',
         'tipe_pesanan' => 'required|string',
-        'id_meja' => 'nullable|exists:mejas,id_meja',
+        'id_meja' => 'nullable|exists:meja,id_meja',
     ]);
 
     // Hitung total harga
@@ -58,7 +58,7 @@ class PesanController extends Controller
 
     // Ubah status meja jadi 'dipakai' jika makan di tempat
     if ($request->tipe_pesanan == 'makan_ditempat' && $request->id_meja) {
-        Meja::where('id_meja', $request->id_meja)->update(['status' => 'dipakai']);
+        Meja::where('id_meja', $request->id_meja)->update(['status' => 'sedang digunakan']);
     }
 
     return redirect()->route('pesan')->with('success', 'Pesanan berhasil dibuat!');

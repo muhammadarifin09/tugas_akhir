@@ -16,9 +16,9 @@ class PemesananController extends Controller
     public function create($id)
     {
         $produk = Produk::findOrFail($id);
-        $meja = Meja::where('status', 'tersedia')->get();
+        $mejas = Meja::where('status', 'tersedia')->get();
 
-        return view('pelanggan.pesan', compact('produk', 'meja'));
+        return view('pelanggan.pesan', compact('produk', 'mejas'));
     }
 
     public function store(Request $request)
