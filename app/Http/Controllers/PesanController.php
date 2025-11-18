@@ -20,12 +20,17 @@ class PesanController extends Controller
 
     public function store(Request $request)
 {
-    // Validasi
+    // Validasi input
     $request->validate([
+        'nama_pelanggan' => 'required|string|max:100',
+        'no_wa' => 'required|string|max:20',
+        'alamat' => 'required|string|max:255',
+
         'id_produk' => 'required|array|min:1',
         'id_produk.*' => 'exists:produk,id_produk',
         'jumlah' => 'required|array|min:1',
         'jumlah.*' => 'integer|min:1',
+
         'tipe_pesanan' => 'required|string',
         'id_meja' => 'nullable|exists:meja,id_meja',
     ]);
@@ -42,8 +47,11 @@ class PesanController extends Controller
         'id_user' => Auth::id(),
         'id_meja' => $request->tipe_pesanan == 'makan_ditempat' ? $request->id_meja : null,
         'tipe_pesanan' => $request->tipe_pesanan,
-        //'status' => 'menunggu',
         'total_harga' => $total_harga,
+         // 🔥 Tambahan baru
+        'nama_pelanggan' => $request->nama_pelanggan,
+        'no_wa' => $request->no_wa,
+        'alamat' => $request->alamat,
     ]);
 
     // Simpan detail pesanan

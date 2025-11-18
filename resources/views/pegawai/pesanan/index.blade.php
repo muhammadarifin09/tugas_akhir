@@ -22,6 +22,9 @@
                         <tr>
                             <th style="width: 50px;">No</th>
                             <th style="width: 180px;">Tanggal</th>
+                            <th style="width: 180px;">Nama Pelanggan</th>
+                            <th style="width: 150px;">No. WhatsApp</th>
+                            <th style="width: 250px;">Alamat</th>
                             <th style="width: 150px;">Tipe Pesanan</th>
                             <th style="width: 90px;">No. Meja</th>
                             <th style="width: 210px;">Total Harga</th>
@@ -33,26 +36,48 @@
                     <tbody>
                         @forelse ($pesanan as $index => $item)
                             <tr>
+
+                                {{-- Nomor urut --}}
                                 <td>{{ $pesanan->firstItem() + $index }}</td>
+
+                                {{-- Tanggal Pesanan --}}
                                 <td>{{ $item->created_at->format('d M Y H:i') }}</td>
 
-                                {{-- Kolom tipe pesanan --}}
+                                {{-- Nama Pelanggan --}}
+                                <td>{{ $item->nama_pelanggan ?? '-' }}</td>
+
+                                {{-- Nomor WhatsApp --}}
                                 <td>
-                                    <span class="badge 
-                                        {{ $item->tipe_pesanan == 'Makan di Tempat' ? 'bg-success' : 'bg-info text-dark' }}">
-                                        {{ ucfirst($item->tipe_pesanan) }}
+                                    @if($item->no_wa)
+                                    <a href="https://wa.me/{{ $item->no_wa }}" 
+                                        target="_blank" 
+                                        class="btn btn-sm btn-success">
+                                        <i class="fab fa-whatsapp"></i> {{ $item->no_wa }}
+                                    </a>
+                                    @else
+                                        -
+                                    @endif
+                                </td>
+
+                                {{-- Alamat --}}
+                                <td>{{ $item->alamat ?? '-' }}</td>
+
+                                {{-- Tipe Pesanan --}}
+                                <td>
+                                    <span class="badge {{ $item->tipe_pesanan == 'makan_ditempat' ? 'bg-success' : 'bg-info text-dark' }}">
+                                        {{ $item->tipe_pesanan == 'makan_ditempat' ? 'Makan di Tempat' : 'Dibawa Pulang' }}
                                     </span>
                                 </td>
 
-                                {{-- Kolom nomor meja --}}
+                                {{-- Nomor Meja --}}
                                 <td>{{ $item->meja->nomor_meja ?? '-' }}</td>
 
-                                {{-- Kolom total harga --}}
+                                {{-- Total Harga --}}
                                 <td class="fw-semibold">
                                     Rp {{ number_format($item->total_harga, 0, ',', '.') }}
                                 </td>
 
-                                {{-- Kolom status --}}
+                                {{-- Status --}}
                                 <td>
                                     @switch($item->status)
                                         @case('pending')
@@ -67,14 +92,13 @@
                                         @case('batal')
                                             <span class="badge bg-danger">Batal</span>
                                             @break
-                                        @default
-                                            <span class="badge bg-secondary">{{ ucfirst($item->status) }}</span>
                                     @endswitch
                                 </td>
 
-                                {{-- Kolom aksi --}}
+                                {{-- Aksi --}}
                                 <td>
                                     <div class="d-flex justify-content-center align-items-center gap-2">
+
                                         <!-- Tombol Detail -->
                                         <button type="button"
                                             class="btn btn-sm btn-info text-white shadow-sm"
@@ -83,7 +107,7 @@
                                             <i class="fas fa-eye me-1"></i> Detail
                                         </button>
 
-                                        <!-- Form Ubah Status -->
+                                        <!-- Select Update Status -->
                                         <form action="{{ route('pegawai.pesanan.updateStatus', $item->id_pesanan) }}"
                                             method="POST" class="d-inline">
                                             @csrf
@@ -98,16 +122,18 @@
                                         </form>
                                     </div>
                                 </td>
+
                             </tr>
                         @empty
                             <tr>
-                                <td colspan="7" class="text-center py-4 text-muted">
+                                <td colspan="10" class="text-center py-4 text-muted">
                                     <i class="fas fa-inbox fa-2x mb-2"></i><br>
                                     Belum ada data pesanan.
                                 </td>
                             </tr>
                         @endforelse
                     </tbody>
+
                 </table>
             </div>
 
@@ -175,6 +201,24 @@
                     </div>
 
                     <div class="modal-body">
+
+                    <div class="mb-4">
+                        <h6 class="fw-bold">Informasi Pelanggan</h6>
+                        <table class="table table-sm table-bordered">
+                            <tr>
+                                <th width="30%">Nama Pelanggan</th>
+                                <td>{{ $item->nama_pelanggan ?? '-' }}</td>
+                            </tr>
+                            <tr>
+                                <th>Nomor WhatsApp</th>
+                                <td>{{ $item->no_wa ?? '-' }}</td>
+                            </tr>
+                            <tr>
+                                <th>Alamat</th>
+                                <td>{{ $item->alamat ?? '-' }}</td>
+                            </tr>
+                        </table>
+                    </div>
                         <div class="table-responsive">
                             <table class="table table-bordered table-striped text-center align-middle mb-0">
                                 <thead class="table-light">

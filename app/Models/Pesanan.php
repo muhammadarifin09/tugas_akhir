@@ -19,6 +19,9 @@ class Pesanan extends Model
         'total_harga',
         'status',
         'tanggal_pesanan',
+        'nama_pelanggan',
+        'no_wa',
+        'alamat',
     ];
 
     public $incrementing = true;

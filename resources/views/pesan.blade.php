@@ -60,7 +60,7 @@
                   <input type="number" name="jumlah[]" class="form-control form-control-modern jumlah" min="1" value="1" required>
                 </div>
                 <div class="col-md-3 text-end">
-                  <button type="button" class="btn btn-danger-modern btn-sm hapusProduk mt-4">
+                  <button type="button" class="btn btn-danger-custom btn-sm hapusProduk mt-4">
                     <i class="fas fa-trash me-1"></i>
                     Hapus
                   </button>
@@ -76,7 +76,7 @@
 
           <!-- Tombol Tambah Produk -->
           <div class="text-center">
-            <button type="button" class="btn btn-success-modern btn-lg" id="tambahProduk">
+            <button type="button" class="btn btn-success-custom btn-lg" id="tambahProduk">
               <i class="fas fa-plus-circle me-2"></i>
               Tambah Menu Lainnya
             </button>
@@ -84,6 +84,36 @@
         </div>
 
         <hr class="my-4">
+        
+        <!-- Data Pelanggan -->
+        <div class="mb-4">
+          <h5 class="section-title mb-3">
+            <i class="fas fa-user me-2"></i>
+            Data Pelanggan
+          </h5>
+
+          <div class="row g-3">
+            <div class="col-md-6">
+              <label class="form-label fw-semibold">Nama Pelanggan</label>
+              <input type="text" name="nama_pelanggan" class="form-control form-control-modern" 
+                    placeholder="Masukkan nama Anda" required>
+            </div>
+
+            <div class="col-md-6">
+              <label class="form-label fw-semibold">Nomor WhatsApp</label>
+              <input type="text" name="no_wa" class="form-control form-control-modern" 
+                    placeholder="Contoh: 6281234567890" required>
+              <small class="text-muted">Digunakan untuk mengirim konfirmasi pesanan</small>
+            </div>
+
+            <div class="col-md-12" id="alamatField">
+              <label class="form-label fw-semibold">Alamat Lengkap</label>
+              <textarea name="alamat" class="form-control form-control-modern" rows="3" 
+                        placeholder="Masukkan alamat (khusus untuk dibawa pulang)"></textarea>
+            </div>
+          </div>
+        </div>
+
 
         <!-- Tipe Pesanan & Meja Section -->
         <div class="row">
@@ -160,7 +190,7 @@
 
         <!-- Submit Button -->
         <div class="text-center">
-          <button type="submit" class="btn btn-warning-modern btn-lg px-5 py-3">
+          <button type="submit" class="btn btn-success-submit btn-lg px-5 py-3">
             <i class="fas fa-paper-plane me-2"></i>
             Kirim Pesanan Sekarang
           </button>
@@ -171,6 +201,23 @@
 </div>
 
 <script>
+  // Sembunyikan atau tampilkan alamat sesuai tipe pesanan
+function toggleAlamatField() {
+  const tipe = document.querySelector('input[name="tipe_pesanan"]:checked').value;
+  const alamatField = document.getElementById('alamatField');
+
+  alamatField.style.display = (tipe === 'dibawa_pulang') ? 'block' : 'none';
+}
+
+// Event untuk perubahan tipe pesanan
+document.querySelectorAll('input[name="tipe_pesanan"]').forEach(input => {
+  input.addEventListener('change', toggleAlamatField);
+});
+
+// Load awal saat halaman dibuka
+window.addEventListener('load', toggleAlamatField);
+
+
   function updateTotal() {
     let total = 0;
     document.querySelectorAll('.produk-item').forEach(item => {
@@ -262,6 +309,8 @@
     --light: #f8f9fa;
     --success: #28a745;
     --danger: #dc3545;
+    --success-hover: #218838;
+    --danger-hover: #c82333;
   }
 
   .gradient-text {
@@ -378,54 +427,77 @@
     box-shadow: 0 8px 25px rgba(255, 215, 0, 0.3);
   }
 
-  .btn-warning-modern {
-    background: linear-gradient(135deg, var(--primary), var(--primary-dark));
-    border: none;
+  /* TOMBOL TAMBAH PRODUK - WARNA HIJAU TETAP */
+  .btn-success-custom {
+    background: linear-gradient(135deg, #28a745, #20c997) !important;
+    border: none !important;
     border-radius: 12px;
-    color: var(--secondary);
+    color: white !important;
+    font-weight: 600;
+    padding: 0.75rem 1.5rem;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(40, 167, 69, 0.3);
+  }
+
+  .btn-success-custom:hover {
+    background: linear-gradient(135deg, #218838, #1ba87e) !important;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(40, 167, 69, 0.4);
+    color: white !important;
+  }
+
+  .btn-success-custom:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 10px rgba(40, 167, 69, 0.3);
+  }
+
+  /* TOMBOL KIRIM PESANAN - WARNA HIJAU */
+  .btn-success-submit {
+    background: linear-gradient(135deg, #28a745, #20c997) !important;
+    border: none !important;
+    border-radius: 12px;
+    color: white !important;
     font-weight: 600;
     font-size: 1.1rem;
     padding: 1rem 2rem;
     transition: all 0.3s ease;
-    box-shadow: 0 4px 15px rgba(255, 215, 0, 0.4);
+    box-shadow: 0 4px 15px rgba(40, 167, 69, 0.4);
   }
 
-  .btn-warning-modern:hover {
+  .btn-success-submit:hover {
+    background: linear-gradient(135deg, #218838, #1ba87e) !important;
     transform: translateY(-2px);
-    box-shadow: 0 8px 25px rgba(255, 215, 0, 0.6);
-    color: var(--secondary);
+    box-shadow: 0 8px 25px rgba(40, 167, 69, 0.6);
+    color: white !important;
   }
 
-  .btn-success-modern {
-    background: linear-gradient(135deg, #28a745, #20c997);
-    border: none;
-    border-radius: 12px;
-    color: white;
-    font-weight: 600;
-    padding: 0.75rem 1.5rem;
-    transition: all 0.3s ease;
+  .btn-success-submit:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 10px rgba(40, 167, 69, 0.3);
   }
 
-  .btn-success-modern:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(40, 167, 69, 0.4);
-    color: white;
-  }
-
-  .btn-danger-modern {
-    background: linear-gradient(135deg, #dc3545, #c82333);
-    border: none;
+  /* TOMBOL HAPUS - WARNA MERAH TETAP */
+  .btn-danger-custom {
+    background: linear-gradient(135deg, #dc3545, #e74c3c) !important;
+    border: none !important;
     border-radius: 8px;
-    color: white;
+    color: white !important;
     font-weight: 500;
     padding: 0.5rem 1rem;
     transition: all 0.3s ease;
+    box-shadow: 0 2px 8px rgba(220, 53, 69, 0.3);
   }
 
-  .btn-danger-modern:hover {
-    background: linear-gradient(135deg, #c82333, #dc3545);
-    color: white;
+  .btn-danger-custom:hover {
+    background: linear-gradient(135deg, #c82333, #c0392b) !important;
+    color: white !important;
     transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(220, 53, 69, 0.4);
+  }
+
+  .btn-danger-custom:active {
+    transform: translateY(0);
+    box-shadow: 0 1px 6px rgba(220, 53, 69, 0.3);
   }
 
   .alert-modern {
@@ -474,7 +546,7 @@
       gap: 0.5rem;
     }
     
-    .btn-warning-modern {
+    .btn-success-submit {
       width: 100%;
       padding: 1rem;
     }

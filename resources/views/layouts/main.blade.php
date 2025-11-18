@@ -9,6 +9,11 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.6.0/css/all.min.css" />
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
   
+  <!-- Cache Control -->
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta http-equiv="Expires" content="0">
+  
   <style>
     :root {
       --primary: #ffd700; /* Kuning emas */
@@ -17,28 +22,33 @@
       --dark: #1a1a1a; /* Hitam gelap */
       --light: #f8f9fa;
       --transition: all 0.3s ease;
+      /* Variabel warna oranye */
+      --orange: #ff6b00;
+      --orange-dark: #e55a00;
+      --orange-light: #ff8c33;
     }
 
     body { 
       margin: 0; 
       padding: 0; 
-      color: white;
+      color: #333; /* Ubah warna teks menjadi gelap untuk kontras dengan background putih */
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      padding-top: 70px; /* Space for fixed navbar */
+      padding-top: 70px;
+      background: #ffffff; /* UBAH: dari #1a1a1a (hitam) menjadi #ffffff (putih) */
     }
 
     /* Modern Navbar - Kuning & Hitam */
     .navbar-modern {
-      background: linear-gradient(135deg, var(--secondary) 0%, var(--dark) 100%);
+      background: linear-gradient(135deg, var(--secondary) 0%, var(--dark) 100%) !important;
       backdrop-filter: blur(10px);
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); /* Ubah shadow menjadi lebih soft */
       padding: 0.8rem 0;
       position: fixed;
       top: 0;
       left: 0;
       right: 0;
       z-index: 1000;
-      border-bottom: 3px solid var(--primary);
+      border-bottom: 3px solid var(--primary) !important;
       transition: var(--transition);
     }
 
@@ -48,13 +58,14 @@
       padding: 0.5rem 0;
     }
 
+    /* PERBAIKAN: Logo konsisten kuning-orange di semua halaman */
     .navbar-brand-modern {
       font-size: 1.5rem;
       font-weight: 800;
-      background: linear-gradient(135deg, var(--primary), #ffed4e);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
+      background: linear-gradient(135deg, var(--primary), var(--orange)) !important;
+      -webkit-background-clip: text !important;
+      -webkit-text-fill-color: transparent !important;
+      background-clip: text !important;
       text-decoration: none;
       display: flex;
       align-items: center;
@@ -68,7 +79,7 @@
       }
     }
 
-    /* PERBAIKAN: Hamburger Menu HANYA tampil di mobile */
+    /* Hamburger Menu HANYA tampil di mobile */
     .navbar-toggler-modern {
       border: 2px solid var(--primary) !important;
       padding: 0.5rem 0.7rem !important;
@@ -79,11 +90,9 @@
       justify-content: center !important;
       width: 44px !important;
       height: 44px !important;
-      /* PERBAIKAN: Sembunyikan di desktop */
       display: none !important;
     }
 
-    /* PERBAIKAN: Tampilkan HANYA di mobile */
     @media (max-width: 991.98px) {
       .navbar-toggler-modern {
         display: flex !important;
@@ -127,7 +136,6 @@
       align-items: center;
       gap: 0.5rem;
       text-align: center;
-      /* PERBAIKAN: Hilangkan garis bawah default */
       text-decoration: none !important;
     }
 
@@ -142,37 +150,23 @@
       color: var(--primary) !important;
       background: rgba(255, 215, 0, 0.1);
       transform: translateY(-2px);
-      /* PERBAIKAN: Pastikan tidak ada garis bawah saat hover */
       text-decoration: none !important;
     }
 
+    /* PERBAIKAN UTAMA: Gradasi ORANYE-KUNING dengan !important */
     .nav-link-modern.active {
-      color: var(--secondary) !important;
-      background: linear-gradient(135deg, var(--primary), var(--primary-dark));
-      box-shadow: 0 4px 12px rgba(255, 215, 0, 0.4);
-      /* PERBAIKAN: Pastikan tidak ada garis bawah saat active */
+      color: white !important;
+      background: linear-gradient(135deg, var(--orange), var(--primary)) !important;
+      box-shadow: 0 4px 12px rgba(255, 107, 0, 0.4) !important;
       text-decoration: none !important;
+      border: none !important;
     }
 
-    /* PERBAIKAN: HAPUS pseudo-element ::after yang membuat garis bawah */
-    /*
-    .nav-link-modern::after {
-      content: '';
-      position: absolute;
-      bottom: 0;
-      left: 50%;
-      width: 0;
-      height: 2px;
-      background: var(--primary);
-      transition: var(--transition);
-      transform: translateX(-50%);
+    .nav-link-modern.active:hover {
+      background: linear-gradient(135deg, var(--orange-dark), var(--primary-dark)) !important;
+      color: white !important;
+      transform: translateY(-2px);
     }
-
-    .nav-link-modern:hover::after,
-    .nav-link-modern.active::after {
-      width: 80%;
-    }
-    */
 
     /* User Section */
     .user-section {
@@ -201,7 +195,6 @@
       align-items: center;
       gap: 0.5rem;
       text-align: center;
-      /* PERBAIKAN: Hilangkan garis bawah */
       text-decoration: none !important;
     }
 
@@ -215,19 +208,18 @@
       color: var(--primary);
     }
 
-    /* Buttons - Kuning & Hitam */
+    /* Buttons dengan Gradasi Oranye */
     .btn-primary-modern {
-      background: linear-gradient(135deg, var(--primary), var(--primary-dark));
-      border: none;
+      background: linear-gradient(135deg, var(--orange), var(--orange-dark)) !important;
+      border: none !important;
       border-radius: 8px;
       padding: 0.6rem 1.5rem;
       font-weight: 600;
       transition: var(--transition);
-      box-shadow: 0 4px 12px rgba(255, 215, 0, 0.3);
-      color: var(--secondary);
+      box-shadow: 0 4px 12px rgba(255, 107, 0, 0.3) !important;
+      color: white;
       width: 100%;
       text-align: center;
-      /* PERBAIKAN: Hilangkan garis bawah */
       text-decoration: none !important;
     }
 
@@ -239,23 +231,23 @@
 
     .btn-primary-modern:hover {
       transform: translateY(-2px);
-      box-shadow: 0 6px 20px rgba(255, 215, 0, 0.5);
-      background: linear-gradient(135deg, var(--primary-dark), var(--primary));
-      color: var(--secondary);
+      box-shadow: 0 6px 20px rgba(255, 107, 0, 0.5) !important;
+      background: linear-gradient(135deg, var(--orange-dark), var(--orange)) !important;
+      color: white;
       text-decoration: none !important;
     }
 
+    /* PERBAIKAN: Tombol Register konsisten orange/kuning */
     .btn-outline-modern {
-      border: 2px solid var(--primary);
-      color: var(--primary);
-      background: transparent;
+      border: 2px solid var(--primary) !important;
+      color: var(--primary) !important;
+      background: transparent !important;
       border-radius: 8px;
       padding: 0.6rem 1.5rem;
       font-weight: 600;
       transition: var(--transition);
       width: 100%;
       text-align: center;
-      /* PERBAIKAN: Hilangkan garis bawah */
       text-decoration: none !important;
     }
 
@@ -266,25 +258,24 @@
     }
 
     .btn-outline-modern:hover {
-      background: var(--primary);
-      color: var(--secondary);
+      background: var(--primary) !important;
+      color: var(--secondary) !important;
       transform: translateY(-2px);
-      box-shadow: 0 4px 12px rgba(255, 215, 0, 0.3);
+      box-shadow: 0 4px 12px rgba(255, 215, 0, 0.3) !important;
       text-decoration: none !important;
     }
 
     .btn-danger-modern {
-      background: linear-gradient(135deg, #d4af37, #b39700);
+      background: linear-gradient(135deg, var(--orange), var(--orange-dark)) !important;
       border: none;
       border-radius: 8px;
       padding: 0.6rem 1.5rem;
       font-weight: 600;
       transition: var(--transition);
-      box-shadow: 0 4px 12px rgba(212, 175, 55, 0.3);
-      color: var(--secondary);
+      box-shadow: 0 4px 12px rgba(255, 107, 0, 0.3) !important;
+      color: white;
       width: 100%;
       text-align: center;
-      /* PERBAIKAN: Hilangkan garis bawah */
       text-decoration: none !important;
     }
 
@@ -296,9 +287,9 @@
 
     .btn-danger-modern:hover {
       transform: translateY(-2px);
-      box-shadow: 0 6px 20px rgba(212, 175, 55, 0.5);
-      background: linear-gradient(135deg, #b39700, #d4af37);
-      color: var(--secondary);
+      box-shadow: 0 6px 20px rgba(255, 107, 0, 0.5) !important;
+      background: linear-gradient(135deg, var(--orange-dark), var(--orange)) !important;
+      color: white;
       text-decoration: none !important;
     }
 
@@ -308,7 +299,7 @@
       border-radius: 12px;
       margin-top: 1rem;
       padding: 1rem;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1); /* Ubah shadow menjadi lebih soft */
       border: 1px solid rgba(255, 215, 0, 0.2);
     }
 
@@ -343,7 +334,7 @@
       border-color: var(--primary);
     }
 
-    /* PERBAIKAN: Mobile Backdrop HANYA di mobile */
+    /* Mobile Backdrop HANYA di mobile */
     .navbar-backdrop {
       position: fixed;
       top: 0;
@@ -355,11 +346,9 @@
       opacity: 0;
       visibility: hidden;
       transition: var(--transition);
-      /* PERBAIKAN: Sembunyikan di desktop */
       display: none;
     }
 
-    /* PERBAIKAN: Tampilkan backdrop HANYA di mobile */
     @media (max-width: 991.98px) {
       .navbar-backdrop {
         display: block;
@@ -371,27 +360,102 @@
       visibility: visible;
     }
 
-    /* Hero Section (Existing) */
+    /* Hero Section */
     .hero {
       height: 100vh;
-      background-image: url('{{ asset('images/bg-hero.jpg') }}');
+      background: linear-gradient(135deg, #ffffff, #f8f9fa); /* UBAH: Background putih untuk hero */
       background-size: cover;
       background-position: center;
       display: flex;
       align-items: center;
       justify-content: center;
-      color: white;
+      color: #333; /* UBAH: Warna teks menjadi gelap */
       text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(255, 255, 255, 0.8); /* UBAH: Overlay putih */
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      max-width: 800px;
+      padding: 2rem;
     }
 
     .hero-content h1 {
       font-weight: 700;
-      text-shadow: 2px 2px 8px rgba(0,0,0,0.6);
+      font-size: 3.5rem;
+      margin-bottom: 1rem;
+      text-shadow: 2px 2px 8px rgba(0,0,0,0.1); /* UBAH: Shadow lebih soft */
+      background: linear-gradient(135deg, var(--primary), var(--orange)) !important;
+      -webkit-background-clip: text !important;
+      -webkit-text-fill-color: transparent !important;
+      background-clip: text !important;
     }
 
-    .about {
-      background-color: #222;
-      padding: 60px 0;
+    .hero-content p {
+      font-size: 1.2rem;
+      margin-bottom: 2rem;
+      opacity: 0.8;
+      color: #666; /* UBAH: Warna teks lebih gelap */
+    }
+
+    .hero-buttons {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .btn-hero {
+      padding: 0.8rem 2rem;
+      font-size: 1.1rem;
+      font-weight: 600;
+      border-radius: 8px;
+      transition: var(--transition);
+      text-decoration: none;
+    }
+
+    .btn-hero-primary {
+      background: linear-gradient(135deg, var(--orange), var(--orange-dark)) !important;
+      color: white;
+      border: none;
+      box-shadow: 0 4px 15px rgba(255, 107, 0, 0.4) !important;
+    }
+
+    .btn-hero-primary:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 25px rgba(255, 107, 0, 0.6) !important;
+      color: white;
+      background: linear-gradient(135deg, var(--orange-dark), var(--orange)) !important;
+    }
+
+    .btn-hero-secondary {
+      background: transparent;
+      color: var(--primary);
+      border: 2px solid var(--primary);
+    }
+
+    .btn-hero-secondary:hover {
+      background: var(--primary);
+      color: var(--secondary);
+      transform: translateY(-3px);
+    }
+
+    /* Main Content Area */
+    main {
+      background: #ffffff; /* UBAH: Pastikan background main putih */
+      min-height: calc(100vh - 70px);
     }
 
     /* Responsive Utilities */
@@ -416,7 +480,6 @@
         font-size: 0.9rem;
       }
 
-      /* PERBAIKAN: Pastikan hamburger tetap terlihat di mobile kecil */
       .navbar-toggler-modern {
         width: 40px !important;
         height: 40px !important;
@@ -426,6 +489,24 @@
       .navbar-toggler-icon-modern {
         width: 20px !important;
         height: 20px !important;
+      }
+
+      .hero-content h1 {
+        font-size: 2.5rem;
+      }
+
+      .hero-content p {
+        font-size: 1rem;
+      }
+
+      .hero-buttons {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .btn-hero {
+        width: 100%;
+        max-width: 250px;
       }
     }
 
@@ -445,7 +526,6 @@
       animation: slideDown 0.3s ease-out;
     }
 
-    /* PERBAIKAN: Hapus force show di desktop - hanya di mobile */
     @media (max-width: 991.98px) {
       .navbar-toggler {
         display: block !important;
@@ -453,12 +533,36 @@
         opacity: 1 !important;
       }
     }
+
+    /* PERBAIKAN: Force override untuk semua elemen yang mungkin masih biru */
+    .bg-primary, .btn-primary {
+      background: linear-gradient(135deg, var(--orange), var(--orange-dark)) !important;
+      border-color: var(--orange) !important;
+    }
+
+    /* Reset semua background biru yang mungkin tersisa */
+    [class*="bg-"], [class*="btn-"] {
+      background-image: none !important;
+    }
+
+    /* PERBAIKAN: Override khusus untuk Bootstrap btn-outline-primary */
+    .btn-outline-primary {
+      border-color: var(--primary) !important;
+      color: var(--primary) !important;
+      background: transparent !important;
+    }
+
+    .btn-outline-primary:hover {
+      background: var(--primary) !important;
+      color: var(--secondary) !important;
+      border-color: var(--primary) !important;
+    }
   </style>
 </head>
 
 <body>
 
-  <!-- PERBAIKAN: Mobile Backdrop HANYA aktif di mobile -->
+  <!-- Mobile Backdrop HANYA aktif di mobile -->
   <div class="navbar-backdrop" id="navbarBackdrop"></div>
 
   <!-- Modern Navbar - Kuning & Hitam -->
@@ -470,7 +574,7 @@
         <span>JURAGAN 96</span>
       </a>
 
-      <!-- PERBAIKAN: Hamburger Menu HANYA tampil di mobile -->
+      <!-- Hamburger Menu HANYA tampil di mobile -->
       <button class="navbar-toggler navbar-toggler-modern" type="button" 
               data-bs-toggle="collapse" data-bs-target="#navbarModern"
               aria-controls="navbarModern" aria-expanded="false" 
@@ -546,6 +650,7 @@
               <i class="fas fa-sign-in-alt me-1"></i>
               <span>Login</span>
             </a>
+            <!-- PERBAIKAN: Pastikan tombol Register menggunakan class btn-outline-modern -->
             <a href="{{ route('register') }}" class="btn btn-outline-modern">
               <i class="fas fa-user-plus me-1"></i>
               <span>Register</span>
@@ -581,15 +686,46 @@
       const navbarToggler = document.querySelector('.navbar-toggler-modern');
       const navbarCollapse = document.getElementById('navbarModern');
 
-      // PERBAIKAN: Handle mobile features HANYA di mobile
+      // PERBAIKAN: Force remove any remaining blue colors dan konsistensi warna
+      function ensureColorConsistency() {
+        // Logo JURAGAN 96 - pastikan konsisten kuning-orange
+        const logo = document.querySelector('.navbar-brand-modern');
+        if (logo) {
+          logo.style.background = 'linear-gradient(135deg, #ffd700, #ff6b00) !important';
+          logo.style.webkitBackgroundClip = 'text !important';
+          logo.style.webkitTextFillColor = 'transparent !important';
+        }
+
+        // Tombol Register - pastikan konsisten
+        const registerBtn = document.querySelector('a[href*="register"]');
+        if (registerBtn) {
+          registerBtn.classList.add('btn-outline-modern');
+          registerBtn.classList.remove('btn-outline-primary');
+          registerBtn.style.borderColor = '#ffd700 !important';
+          registerBtn.style.color = '#ffd700 !important';
+          registerBtn.style.background = 'transparent !important';
+        }
+
+        // Remove any inline styles that might contain blue
+        document.querySelectorAll('.nav-link-modern.active').forEach(link => {
+          link.style.background = '';
+          link.style.backgroundImage = '';
+          link.style.backgroundColor = '';
+        });
+        
+        // Force apply our orange gradient
+        document.querySelectorAll('.nav-link-modern.active').forEach(link => {
+          link.classList.add('force-orange');
+        });
+      }
+
+      // Handle mobile features HANYA di mobile
       function handleMobileFeatures() {
         if (window.innerWidth < 992) {
-          // Backdrop functionality hanya di mobile
           navbarBackdrop.addEventListener('click', function() {
             navbarToggler.click();
           });
 
-          // Auto-close menu ketika link diklik hanya di mobile
           document.querySelectorAll('.nav-link-modern').forEach(link => {
             link.addEventListener('click', function() {
               if (window.innerWidth < 992) {
@@ -630,7 +766,6 @@
       const tentangLink = document.querySelector('.tentang-link');
       if (tentangLink) {
         tentangLink.addEventListener('click', function(e) {
-          // Jika sudah di halaman beranda, scroll ke section about
           if (window.location.pathname === '{{ route('beranda') }}' || 
               window.location.pathname === '/' || 
               window.location.pathname === '') {
@@ -642,7 +777,6 @@
                 block: 'start'
               });
               
-              // Tutup mobile menu setelah klik (hanya di mobile)
               if (window.innerWidth < 992) {
                 navbarToggler.click();
               }
@@ -653,7 +787,6 @@
 
       // Handle resize events
       window.addEventListener('resize', function() {
-        // Reset backdrop dan overflow ketika resize ke desktop
         if (window.innerWidth >= 992) {
           navbarBackdrop.classList.remove('show');
           document.body.style.overflow = '';
@@ -661,15 +794,15 @@
       });
 
       // Initialize functions
+      ensureColorConsistency(); // Ganti removeBlueColors dengan ensureColorConsistency
       handleMobileFeatures();
       handleScroll();
       window.addEventListener('scroll', handleScroll);
 
-      // Smooth scrolling untuk anchor links di halaman yang sama
+      // Smooth scrolling untuk anchor links
       document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', function (e) {
           const href = this.getAttribute('href');
-          // Hanya handle anchor links di halaman yang sama
           if (href.includes('#') && !href.includes('{{ route('beranda') }}')) {
             e.preventDefault();
             const target = document.querySelector(href);
@@ -682,7 +815,50 @@
           }
         });
       });
+
+      // Force apply styles after page load
+      setTimeout(ensureColorConsistency, 100);
+      setTimeout(ensureColorConsistency, 500);
+      
+      // Juga apply ketika berpindah halaman
+      window.addEventListener('load', ensureColorConsistency);
     });
+
+    // Additional style untuk force override
+    const forceStyle = document.createElement('style');
+    forceStyle.textContent = `
+      .nav-link-modern.active.force-orange {
+        background: linear-gradient(135deg, #ff6b00, #ffd700) !important;
+        box-shadow: 0 4px 12px rgba(255, 107, 0, 0.4) !important;
+      }
+      .nav-link-modern.active {
+        background: linear-gradient(135deg, #ff6b00, #ffd700) !important;
+      }
+      .navbar-brand-modern {
+        background: linear-gradient(135deg, #ffd700, #ff6b00) !important;
+        -webkit-background-clip: text !important;
+        -webkit-text-fill-color: transparent !important;
+        background-clip: text !important;
+      }
+      .btn-outline-modern, 
+      .btn-outline-primary {
+        border-color: #ffd700 !important;
+        color: #ffd700 !important;
+        background: transparent !important;
+      }
+      .btn-outline-modern:hover,
+      .btn-outline-primary:hover {
+        background: #ffd700 !important;
+        color: #000000 !important;
+        border-color: #ffd700 !important;
+      }
+      
+      /* Pastikan background utama putih */
+      body, main {
+        background-color: #ffffff !important;
+      }
+    `;
+    document.head.appendChild(forceStyle);
   </script>
   
 </body>
