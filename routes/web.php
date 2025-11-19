@@ -22,6 +22,21 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
 });
 
 
+// Profil Pelanggan
+Route::prefix('pelanggan')->middleware('auth')->group(function () {
+
+    Route::get('/profil', [\App\Http\Controllers\Pelanggan\ProfileController::class, 'index'])
+        ->name('pelanggan.profil.index');
+
+    Route::get('/profil/edit', [\App\Http\Controllers\Pelanggan\ProfileController::class, 'edit'])
+        ->name('pelanggan.profil.edit');
+
+    Route::post('/profil/update', [\App\Http\Controllers\Pelanggan\ProfileController::class, 'update'])
+        ->name('pelanggan.profil.update');
+
+});
+
+
 // Route untuk pegawai (pastikan ada middleware auth + role pegawai)
 use App\Http\Controllers\Pegawai\MejaController;
 

@@ -188,24 +188,91 @@
       }
     }
 
-    .user-greeting {
+    /* Profile Dropdown Styles */
+    .profile-dropdown {
+      position: relative;
+    }
+
+    .profile-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 90%;
+      background: transparent;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: var(--transition);
+      border: 2.8px solid rgba(255, 255, 255, 1);
+    }
+
+    .profile-icon:hover {
+      transform: scale(1.1);
+      border-color: var(--primary);
+      box-shadow: 0 0 15px rgba(255, 215, 0, 0.5);
+      background: rgba(255, 255, 255, 0.1);
+    }
+
+    .profile-icon-simple {
+      width: 24px;
+      height: 24px;
+      filter: invert(1); /* Membuat icon putih */
+      opacity: 0.9;
+      transition: var(--transition);
+    }
+
+    .profile-icon:hover .profile-icon-simple {
+      opacity: 1;
+      filter: invert(1) sepia(1) saturate(5) hue-rotate(0deg); /* Membuat icon kuning saat hover */
+    }
+
+    .dropdown-menu-profile {
+      position: absolute;
+      top: 100%;
+      right: 0;
+      background: linear-gradient(135deg, var(--secondary) 0%, var(--dark) 100%);
+      border: 1px solid rgba(255, 215, 0, 0.3);
+      border-radius: 8px;
+      padding: 0.5rem 0;
+      min-width: 180px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+      z-index: 1001;
+      margin-top: 0.5rem;
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(-10px);
+      transition: var(--transition);
+    }
+
+    .dropdown-menu-profile.show {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+    }
+
+    .dropdown-item-profile {
       color: rgba(255, 255, 255, 0.9);
-      font-weight: 500;
+      padding: 0.7rem 1.2rem;
+      text-decoration: none;
       display: flex;
       align-items: center;
       gap: 0.5rem;
-      text-align: center;
-      text-decoration: none !important;
+      transition: var(--transition);
+      border: none;
+      background: none;
+      width: 100%;
+      text-align: left;
     }
 
-    @media (min-width: 992px) {
-      .user-greeting {
-        text-align: left;
-      }
-    }
-
-    .user-greeting i {
+    .dropdown-item-profile:hover {
+      background: rgba(255, 215, 0, 0.1);
       color: var(--primary);
+    }
+
+    .dropdown-divider-profile {
+      height: 1px;
+      background: rgba(255, 215, 0, 0.2);
+      margin: 0.3rem 0;
     }
 
     /* Buttons dengan Gradasi Oranye */
@@ -508,6 +575,21 @@
         width: 100%;
         max-width: 250px;
       }
+
+      .profile-icon {
+        width: 35px;
+        height: 35px;
+      }
+
+      .profile-icon-simple {
+        width: 20px;
+        height: 20px;
+      }
+
+      .dropdown-menu-profile {
+        min-width: 160px;
+        right: -50%;
+      }
     }
 
     /* Animation for mobile menu */
@@ -634,17 +716,35 @@
         <!-- User Section -->
         <div class="user-section">
           @auth
-            <div class="user-greeting">
-              <i class="fas fa-user-circle gold-accent"></i>
-              <span>Halo, <span class="gold-accent">{{ Auth::user()->name }}</span>!</span>
+            <!-- Profile Dropdown -->
+            <div class="profile-dropdown">
+              <div class="profile-icon" id="profileDropdown">
+                <!-- Simple White Profile Icon -->
+                <svg class="profile-icon-simple" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M12 12C14.2091 12 16 10.2091 16 8C16 5.79086 14.2091 4 12 4C9.79086 4 8 5.79086 8 8C8 10.2091 9.79086 12 12 12Z" fill="currentColor"/>
+                  <path d="M12 14C9.33 14 4 15.34 4 18V20H20V18C20 15.34 14.67 14 12 14Z" fill="currentColor"/>
+                </svg>
+              </div>
+              <div class="dropdown-menu-profile" id="dropdownMenu">
+                <div class="dropdown-item-profile">
+                  <i class="fas fa-user-circle me-2"></i>
+                  <span>{{ Auth::user()->name }}</span>
+                </div>
+                <div class="dropdown-divider-profile"></div>
+                <a href="{{ route('pelanggan.profil.index') }}" class="dropdown-item-profile">
+                  <i class="fas fa-user-edit me-2"></i>
+                  <span>Profil</span>
+                </a>
+                <div class="dropdown-divider-profile"></div>
+                <form action="{{ route('logout') }}" method="POST" class="d-inline w-100">
+                  @csrf
+                  <button type="submit" class="dropdown-item-profile">
+                    <i class="fas fa-sign-out-alt me-2"></i>
+                    <span>Logout</span>
+                  </button>
+                </form>
+              </div>
             </div>
-            <form action="{{ route('logout') }}" method="POST" class="d-inline w-100">
-              @csrf
-              <button type="submit" class="btn btn-danger-modern">
-                <i class="fas fa-sign-out-alt me-1"></i>
-                <span>Logout</span>
-              </button>
-            </form>
           @else
             <a href="{{ route('login') }}" class="btn btn-primary-modern">
               <i class="fas fa-sign-in-alt me-1"></i>
@@ -685,6 +785,32 @@
       const navbarBackdrop = document.getElementById('navbarBackdrop');
       const navbarToggler = document.querySelector('.navbar-toggler-modern');
       const navbarCollapse = document.getElementById('navbarModern');
+      
+      // Profile Dropdown Functionality
+      const profileDropdown = document.getElementById('profileDropdown');
+      const dropdownMenu = document.getElementById('dropdownMenu');
+      
+      if (profileDropdown && dropdownMenu) {
+        // Toggle dropdown when profile icon is clicked
+        profileDropdown.addEventListener('click', function(e) {
+          e.stopPropagation();
+          dropdownMenu.classList.toggle('show');
+        });
+        
+        // Close dropdown when clicking outside
+        document.addEventListener('click', function(e) {
+          if (!profileDropdown.contains(e.target) && !dropdownMenu.contains(e.target)) {
+            dropdownMenu.classList.remove('show');
+          }
+        });
+        
+        // Close dropdown when clicking on a dropdown item
+        dropdownMenu.querySelectorAll('.dropdown-item-profile').forEach(item => {
+          item.addEventListener('click', function() {
+            dropdownMenu.classList.remove('show');
+          });
+        });
+      }
 
       // PERBAIKAN: Force remove any remaining blue colors dan konsistensi warna
       function ensureColorConsistency() {
@@ -724,12 +850,20 @@
         if (window.innerWidth < 992) {
           navbarBackdrop.addEventListener('click', function() {
             navbarToggler.click();
+            // Also close profile dropdown on mobile backdrop click
+            if (dropdownMenu) {
+              dropdownMenu.classList.remove('show');
+            }
           });
 
           document.querySelectorAll('.nav-link-modern').forEach(link => {
             link.addEventListener('click', function() {
               if (window.innerWidth < 992) {
                 navbarToggler.click();
+                // Close profile dropdown on mobile nav link click
+                if (dropdownMenu) {
+                  dropdownMenu.classList.remove('show');
+                }
               }
             });
           });
@@ -790,6 +924,10 @@
         if (window.innerWidth >= 992) {
           navbarBackdrop.classList.remove('show');
           document.body.style.overflow = '';
+          // Close dropdown on resize to desktop
+          if (dropdownMenu) {
+            dropdownMenu.classList.remove('show');
+          }
         }
       });
 
@@ -856,6 +994,28 @@
       /* Pastikan background utama putih */
       body, main {
         background-color: #ffffff !important;
+      }
+
+      /* Profile dropdown responsive */
+      @media (max-width: 991.98px) {
+        .profile-dropdown {
+          width: 100%;
+          display: flex;
+          justify-content: center;
+        }
+        
+        .dropdown-menu-profile {
+          position: fixed;
+          top: auto;
+          left: 50%;
+          transform: translateX(-50%) translateY(-10px);
+          width: 90%;
+          max-width: 280px;
+        }
+        
+        .dropdown-menu-profile.show {
+          transform: translateX(-50%) translateY(0);
+        }
       }
     `;
     document.head.appendChild(forceStyle);
