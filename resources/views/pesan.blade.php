@@ -32,7 +32,7 @@
       </h3>
     </div>
     <div class="card-body p-4 p-lg-5">
-      <form action="{{ route('pesan.store') }}" method="POST" id="formPesan">
+      <form action="{{ route('keranjang.tambah') }}" method="POST" id="formPesan">
         @csrf
 
         <!-- Container Produk -->
@@ -175,6 +175,41 @@
           </div>
         </div>
 
+        <!-- Metode Pembayaran -->
+        <div class="mb-4">
+          <h5 class="section-title mb-3">
+            <i class="fas fa-wallet me-2"></i>
+            Metode Pembayaran
+          </h5>
+
+          <div class="form-check card-option">
+            <input class="form-check-input" type="radio" name="metode_pembayaran" value="cod" checked>
+            <label class="form-check-label">
+              <div class="option-content">
+                <i class="fas fa-money-bill option-icon"></i>
+                <div>
+                  <h6 class="mb-1">Bayar di Tempat</h6>
+                  <small class="text-muted">Bayar saat pesanan diterima</small>
+                </div>
+              </div>
+            </label>
+          </div>
+
+          <div class="form-check card-option mt-3">
+            <input class="form-check-input" type="radio" name="metode_pembayaran" value="transfer">
+            <label class="form-check-label">
+              <div class="option-content">
+                <i class="fas fa-university option-icon"></i>
+                <div>
+                  <h6 class="mb-1">Transfer Bank</h6>
+                  <small class="text-muted">Bayar melalui transfer</small>
+                </div>
+              </div>
+            </label>
+          </div>
+        </div>
+
+
         <!-- Total Harga Section -->
         <div class="total-section card border-0 bg-gradient-primary text-white p-4 mb-4">
           <div class="row align-items-center">
@@ -192,7 +227,7 @@
         <div class="text-center">
           <button type="submit" class="btn btn-success-submit btn-lg px-5 py-3">
             <i class="fas fa-paper-plane me-2"></i>
-            Kirim Pesanan Sekarang
+            Tambahkan Ke Keranjang
           </button>
         </div>
       </form>

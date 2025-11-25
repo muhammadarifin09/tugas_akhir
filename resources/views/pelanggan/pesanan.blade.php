@@ -72,6 +72,13 @@
                           Dibatalkan
                         </span>
                         @break
+                      @case('menunggu_pembayaran')
+                       <span class="badge status-success" style="background-color: #0d6efd; color: white;">
+                          <i class="fas fa-times-circle me-1"></i>
+                          Menunggu Pembayaran
+                        </span>
+
+                        @break
                       @default
                         <span class="badge status-default">
                           <i class="fas fa-question-circle me-1"></i>

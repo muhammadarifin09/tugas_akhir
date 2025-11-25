@@ -29,7 +29,7 @@
                             <th style="width: 90px;">No. Meja</th>
                             <th style="width: 210px;">Total Harga</th>
                             <th style="width: 110px;">Status</th>
-                            <th style="width: 180px;">Konfirmasi</th>
+                            <th style="width: 180px;">Aksi</th>
                         </tr>
                     </thead>
 
@@ -91,6 +91,9 @@
                                             @break
                                         @case('batal')
                                             <span class="badge bg-danger">Batal</span>
+                                            @break
+                                        @case('menunggu_pembayaran')
+                                            <span class="badge bg-success">Menunggu Pembayaran</span>
                                             @break
                                     @endswitch
                                 </td>

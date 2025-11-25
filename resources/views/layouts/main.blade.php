@@ -1,3 +1,5 @@
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -639,6 +641,28 @@
       color: var(--secondary) !important;
       border-color: var(--primary) !important;
     }
+
+        /* FIX LINK TIDAK BISA DIKLIK */
+    .navbar-backdrop {
+      pointer-events: none !important;
+    }
+
+    .navbar-backdrop.show {
+      pointer-events: auto !important;
+    }
+
+    .navbar-modern {
+      z-index: 9999 !important;
+    }
+
+    .hero::before {
+      z-index: 0 !important;
+    }
+
+    iframe {
+            pointer-events: none !important;
+        }
+
   </style>
 </head>
 
@@ -685,10 +709,10 @@
           </li>
 
           <li class="nav-item">
-            <a class="nav-link-modern {{ request()->routeIs('pesan') ? 'active' : '' }}"
-              href="{{ route('pesan') }}">
+            <a class="nav-link-modern {{ request()->routeIs('keranjang') ? 'active' : '' }}"
+              href="{{ route('keranjang') }}">
               <i class="fas fa-shopping-cart"></i>
-              <span>Pesan</span>
+              <span>Keranjang</span>
             </a>
           </li>
 

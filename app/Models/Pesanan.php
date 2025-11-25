@@ -17,11 +17,13 @@ class Pesanan extends Model
         'id_meja',
         'tipe_pesanan',
         'total_harga',
+        'snap_token',
         'status',
         'tanggal_pesanan',
         'nama_pelanggan',
         'no_wa',
         'alamat',
+        'metode_pembayaran'
     ];
 
     public $incrementing = true;
