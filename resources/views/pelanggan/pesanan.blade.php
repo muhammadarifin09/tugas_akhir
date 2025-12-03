@@ -45,48 +45,59 @@
                     </div>
                   </div>
                 </div>
-                <div class="col-md-6 text-md-end">
-                  <div class="status-badge">
-                    @switch($p->status)
-                      @case('pending')
-                        <span class="badge status-pending">
-                          <i class="fas fa-clock me-1"></i>
-                          Menunggu Konfirmasi
-                        </span>
-                        @break
-                      @case('proses')
-                        <span class="badge status-proses">
-                          <i class="fas fa-spinner me-1"></i>
-                          Sedang Diproses
-                        </span>
-                        @break
-                      @case('selesai')
-                        <span class="badge status-selesai">
-                          <i class="fas fa-check-circle me-1"></i>
-                          Selesai
-                        </span>
-                        @break
-                      @case('batal')
-                        <span class="badge status-batal">
-                          <i class="fas fa-times-circle me-1"></i>
-                          Dibatalkan
-                        </span>
-                        @break
-                      @case('menunggu_pembayaran')
-                       <span class="badge status-success" style="background-color: #0d6efd; color: white;">
-                          <i class="fas fa-times-circle me-1"></i>
-                          Menunggu Pembayaran
-                        </span>
-
-                        @break
-                      @default
-                        <span class="badge status-default">
-                          <i class="fas fa-question-circle me-1"></i>
-                          Tidak Diketahui
-                        </span>
-                    @endswitch
-                  </div>
+              <div class="col-md-6 text-md-end">
+              <div class="d-flex justify-content-end align-items-center gap-2">
+                <div class="status-badge">
+                  @switch($p->status)
+                    @case('pending')
+                      <span class="badge status-pending">
+                        <i class="fas fa-clock me-1"></i>
+                        Menunggu Konfirmasi
+                      </span>
+                      @break
+                    @case('proses')
+                      <span class="badge status-proses">
+                        <i class="fas fa-spinner fa-spin me-1"></i>
+                        Sedang Diproses
+                      </span>
+                      @break
+                    @case('selesai')
+                      <span class="badge status-selesai">
+                        <i class="fas fa-check-circle me-1"></i>
+                        Selesai
+                      </span>
+                      @break
+                    @case('batal')
+                      <span class="badge status-batal">
+                        <i class="fas fa-times-circle me-1"></i>
+                        Dibatalkan
+                      </span>
+                      @break
+                    @case('menunggu_pembayaran')
+                      <span class="badge status-success" style="background-color: #ffe600ff; color: black;">
+                        <i class="fas fa-exclamation-circle me-1"></i>
+                        Menunggu Pembayaran
+                      </span>
+                      @break
+                    @default
+                      <span class="badge status-default">
+                        <i class="fas fa-question-circle me-1"></i>
+                        Tidak Diketahui
+                      </span>
+                  @endswitch
                 </div>
+
+                {{-- Tombol Bayar Sekarang (tampil hanya jika menunggu pembayaran & metode transfer) --}}
+                @if($p->status === 'menunggu_pembayaran' && ($p->metode_pembayaran ?? '') === 'transfer')
+                  <a href="{{ route('checkout.pay', $p->id_pesanan) }}"
+                    class="btn btn-sm btn-warning-modern"
+                    title="Bayar sekarang via Midtrans">
+                    <i class="fas fa-credit-card me-1"></i> Bayar Sekarang
+                  </a>
+                @endif
+              </div>
+            </div>
+
               </div>
             </div>
 

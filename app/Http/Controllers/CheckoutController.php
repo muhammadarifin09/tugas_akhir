@@ -129,10 +129,21 @@ class CheckoutController extends Controller
 
                 $snapToken = $midtrans->createTransaction($orderData);
 
-                // Simpan token
+                // Simpan token + midtrans_order_id (opsional di tabel pesanan)
                 $pesanan->update([
-                    'snap_token' => $snapToken
+                    'snap_token' => $snapToken,
+                    'midtrans_order_id' => $orderData['order_id'], // tambahkan kolom ini di migration jika mau
                 ]);
+
+                // Buat record pembayaran awal
+                \App\Models\Pembayaran::create([
+                    'id_pesanan' => $pesanan->id_pesanan,
+                    'midtrans_order_id' => $orderData['order_id'],
+                    'status' => 'pending',
+                    'gross_amount' => $total_harga,
+                    'received_at' => now(),
+                ]);
+
 
                 // Bersihkan keranjang
                 KeranjangItem::where('id_keranjang', $keranjang->id_keranjang)->delete();
