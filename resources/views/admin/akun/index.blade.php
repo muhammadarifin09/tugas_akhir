@@ -17,7 +17,7 @@
         <table class="table table-bordered table-striped">
             <thead class="thead-dark">
                 <tr>
-                    <th>No</th>
+                    <th>No.</th>
                     <th>Nama</th>
                     <th>Email</th>
                     <th>Role</th>

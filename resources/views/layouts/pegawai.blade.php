@@ -267,7 +267,7 @@
           </a>
         </li>
         <li class="nav-item">
-          <a href="{{ route('pegawai.produk.index') }}" class="nav-link {{ request()->routeIs('pegawai.menu.*') ? 'active' : '' }}">
+          <a href="{{ route('pegawai.produk.index') }}" class="nav-link {{ request()->routeIs('pegawai.produk.*') ? 'active' : '' }}">
             <i class="fas fa-utensils"></i>
             <span>Menu</span>
           </a>
@@ -279,7 +279,7 @@
           </a>
         </li>
         <li class="nav-item">
-          <a href="{{ route('pegawai.produk.index') }}" class="nav-link {{ request()->routeIs('pegawai.laporan.*') ? 'active' : '' }}">
+          <a href="" class="nav-link {{ request()->routeIs('pegawai.laporan.*') ? 'active' : '' }}">
             <i class="fas fa-chart-bar"></i>
             <span>Laporan</span>
           </a>

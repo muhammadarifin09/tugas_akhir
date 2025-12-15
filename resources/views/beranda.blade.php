@@ -26,11 +26,8 @@
           Pesan makanan favorit Anda dengan mudah dari mana saja.
         </p>
         <div class="hero-buttons d-flex flex-wrap gap-3 justify-content-center">
-          <a href="#menu" class="btn btn-warning btn-lg fw-semibold px-4 py-3 shadow-lg">
+          <a href="{{ url('/menu-meja') }}" class="btn btn-warning btn-lg fw-semibold px-4 py-3 shadow-lg">
             <i class="fas fa-utensils me-2"></i>Lihat Menu
-          </a>
-          <a href="#reservation" class="btn btn-outline-light btn-lg fw-semibold px-4 py-3">
-            <i class="fas fa-calendar-check me-2"></i>Pesan Menu dan Meja
           </a>
         </div>
         
@@ -236,7 +233,7 @@
         <p class="text-dark mb-0">Pesan sekarang dan dapatkan promo spesial untuk pembelian pertama!</p>
       </div>
       <div class="col-lg-4 text-lg-end">
-        <a href="#menu" class="btn btn-dark btn-lg px-4 py-3 fw-semibold">
+        <a href="{{ url('/menu-meja') }}" class="btn btn-dark btn-lg px-4 py-3 fw-semibold">
           <i class="fas fa-shopping-cart me-2"></i>Pesan Sekarang
         </a>
       </div>
