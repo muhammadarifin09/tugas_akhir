@@ -29,7 +29,7 @@
 
       <button id="pay-button" class="btn btn-success btn-lg w-100 btn-pay">Bayar Sekarang</button>
 
-      <a href="{{ route('keranjang') }}" class="btn btn-secondary w-100 mt-3 btn-pay">Kembali</a>
+      <a href="{{ route('pelanggan.pesanan') }}" class="btn btn-secondary w-100 mt-3 btn-pay">Bayar Nanti</a>
     </div>
   </div>
 </div>
@@ -60,10 +60,10 @@
 
     snap.pay(snapToken, {
       onSuccess: function(result) {
-        window.location.href = "{{ route('checkout.success', $pesanan->id_pesanan) }}";
+       window.location.href = "{{ route('checkout.success', $pesanan->id_pesanan) }}?from_midtrans=1";
       },
       onPending: function(result) {
-        window.location.href = "{{ route('checkout.success', $pesanan->id_pesanan) }}";
+        window.location.href = "{{ route('checkout.success', $pesanan->id_pesanan) }}?from_midtrans=1";
       },
       onError: function(result) {
         alert('Terjadi kesalahan pada proses pembayaran (sandbox). Cek log server.');

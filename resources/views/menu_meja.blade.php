@@ -41,20 +41,21 @@
         <h2 class="fw-bold text-center mb-5">Daftar Menu Makanan</h2>
         
         <!-- Search Section -->
-     <div class="row mb-4 justify-content-center">
-        <div class="col-md-6">
+        <div class="row mb-4 justify-content-center">
+          <div class="col-md-6">
             <div class="input-group mx-auto" style="max-width: 500px;">
-                <span class="input-group-text bg-warning text-white">
-                    <i class="fas fa-search"></i>
-                </span>
-                <input type="text" id="searchMakanan" class="form-control" placeholder="Cari makanan...">
+              <span class="input-group-text bg-warning text-white">
+                <i class="fas fa-search"></i>
+              </span>
+              <input type="text" id="searchMakanan" class="form-control" placeholder="Cari makanan...">
             </div>
+          </div>
         </div>
-    </div>
 
         <div class="row justify-content-center g-4" id="makananContainer">
           @foreach ($produks->where('jenis', 'makanan') as $produk)
-            <div class="col-lg-3 col-md-4 col-sm-6 menu-item makanan-item" 
+            <!-- NOTE: col-6 untuk xs agar 2 produk per baris di handphone -->
+            <div class="col-6 col-md-4 col-lg-3 menu-item makanan-item" 
                  data-name="{{ strtolower($produk->nama_produk) }}"
                  data-category="{{ strtolower($produk->jenis ?? 'utama') }}">
               <div class="card shadow-sm border-0 h-100 d-flex flex-column product-card">
@@ -127,7 +128,8 @@
 
         <div class="row justify-content-center g-4" id="minumanContainer">
           @foreach ($produks->where('jenis', 'minuman') as $produk)
-            <div class="col-lg-3 col-md-4 col-sm-6 menu-item minuman-item" 
+            <!-- NOTE: col-6 untuk xs agar 2 produk per baris di handphone -->
+            <div class="col-6 col-md-4 col-lg-3 menu-item minuman-item" 
                  data-name="{{ strtolower($produk->nama_produk) }}"
                  data-category="{{ strtolower($produk->jenis ?? 'minuman') }}">
               <div class="card shadow-sm border-0 h-100 d-flex flex-column product-card">
@@ -272,16 +274,21 @@
             Login untuk mulai berbelanja dan memesan menu favorit Anda
           </h6>
         </div>
-        <div class="col-md-4 text-end">
-          <div class="d-flex gap-2 justify-content-end">
-            <a href="{{ route('login') }}" class="btn btn-primary">
-              <i class="fas fa-sign-in-alt me-1"></i> Login
-            </a>
-            <a href="{{ route('register') }}" class="btn btn-outline-primary">
-              <i class="fas fa-user-plus me-1"></i> Daftar
-            </a>
-          </div>
+     <div class="col-md-4 text-end">
+        <div class="d-flex gap-2 justify-content-end">
+
+          <!-- Tombol Login (Biru) -->
+          <a href="{{ route('login') }}" class="btn" style="background-color: #0d6efd; color: white;">
+            <i class="fas fa-sign-in-alt me-1"></i> Login
+          </a>
+
+          <!-- Tombol Daftar (Kuning) -->
+          <a href="{{ route('register') }}" class="btn" style="background-color: #ffc107; color: black;">
+            <i class="fas fa-user-plus me-1"></i> Daftar
+          </a>
+
         </div>
+      </div>
       </div>
     </div>
   </div>
@@ -340,19 +347,20 @@
         <h5 class="modal-title text-dark">
           <i class="fas fa-exclamation-triangle me-2"></i>Peringatan!
         </h5>
-        <button class="btn-close" data-bs-dismiss="modal"></button>
+        <button class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
       </div>
       <div class="modal-body text-dark text-center">
         <i class="fas fa-shopping-cart fa-2x text-warning mb-3"></i>
         <p class="mb-3">Silahkan login terlebih dahulu untuk menambahkan item ke keranjang.</p>
       </div>
       <div class="modal-footer justify-content-center">
-        <a href="{{ route('login') }}" class="btn btn-primary">
-          <i class="fas fa-sign-in-alt me-1"></i> Login
-        </a>
-        <a href="{{ route('register') }}" class="btn btn-outline-primary">
+      <a href="{{ route('login') }}" class="btn" style="background-color: #0d6efd; color: white;">
+    <i class="fas fa-sign-in-alt me-1"></i> Login
+      </a>
+
+      <a href="{{ route('register') }}" class="btn" style="background-color: #ffc107; color: black;">
           <i class="fas fa-user-plus me-1"></i> Daftar
-        </a>
+      </a>
       </div>
     </div>
   </div>
@@ -466,6 +474,14 @@
 
   .form-control {
     border-radius: 0 8px 8px 0 !important;
+  }
+
+  /* Small screen tweaks */
+  @media (max-width: 575.98px) {
+    .card-img-top { height: 150px !important; }
+    .product-card { border-radius: 10px; }
+    .card-body { padding: 12px !important; }
+    .fw-bold.text-danger { font-size: 0.95rem; }
   }
 </style>
 

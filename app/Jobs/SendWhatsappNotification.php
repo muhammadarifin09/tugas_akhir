@@ -2,107 +2,112 @@
 
 namespace App\Jobs;
 
-use App\Models\Pesanan;
+use App\Services\ReceiptGenerator;
+use App\Services\WAService;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
-use Illuminate\Support\Facades\Http;
+use App\Models\Pesanan;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\URL;
 
 class SendWhatsappNotification implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
-    public $id_pesanan;
+    public $pesananId;
 
-    // optional: berapa kali retry, backoff detik
-    public $tries = 3;
-    public $backoff = 60;
-
-    public function __construct($id_pesanan)
+    public function __construct($pesananId)
     {
-        $this->id_pesanan = $id_pesanan;
+        $this->pesananId = $pesananId;
     }
 
-    public function handle()
+    public function handle(ReceiptGenerator $generator)
     {
-        $pesanan = Pesanan::find($this->id_pesanan);
+        $pesanan = Pesanan::with('detailPesanan.produk', 'meja')
+            ->find($this->pesananId);
 
-        if (! $pesanan) {
-            Log::warning('WA Job: Pesanan tidak ditemukan', ['id_pesanan' => $this->id_pesanan]);
-            return;
-        }
-
-        $to = $pesanan->no_wa;
-        if (! $to) {
-            Log::warning('WA Job: Nomor WA tidak ditemukan', ['id_pesanan' => $this->id_pesanan]);
-            return;
-        }
-
-        // bersihkan & pastikan format nomor (contoh sederhana)
-        $toClean = preg_replace('/\D+/', '', $to);
-        if (strlen($toClean) < 9) {
-            Log::warning('WA Job: Nomor WA tampak tidak valid', ['raw' => $to, 'clean' => $toClean]);
-            return;
-        }
-
-        $message = "Pembayaran berhasil! 🎉\n"
-                 . "ID Pesanan: {$pesanan->id_pesanan}\n"
-                 . "Total: Rp " . number_format($pesanan->total_harga, 0, ',', '.');
-
-        $token = env('WHATSAPP_ACCESS_TOKEN');
-        $phoneId = env('WHATSAPP_PHONE_NUMBER_ID');
-
-        if (! $token || ! $phoneId) {
-            Log::error('WA Job: credential WhatsApp tidak ditemukan di .env');
-            return;
-        }
-
-        $url = "https://graph.facebook.com/v17.0/{$phoneId}/messages";
-
-        try {
-            $response = Http::withToken($token)->post($url, [
-                'messaging_product' => 'whatsapp',
-                'to' => $toClean,
-                'type' => 'text',
-                'text' => ['body' => $message],
+        if (!$pesanan) {
+            Log::error("SendWhatsappNotification: Pesanan not found", [
+                'id_pesanan' => $this->pesananId
             ]);
-
-            Log::info('WA Job: response', [
-                'status' => $response->status(),
-                'body'   => $response->body(),
-                'id_pesanan' => $this->id_pesanan
-            ]);
-
-            if ($response->failed()) {
-                // Jika using queue driver non-sync -> biarkan throw untuk retry
-                if (config('queue.default') !== 'sync') {
-                    throw new \Exception('WA API request failed: ' . $response->body());
-                } else {
-                    // Lokal: log saja, jangan throw supaya callback Midtrans tidak gagal
-                    Log::error('WA Job (sync): gagal mengirim, tidak melempar exception (lihat log).');
-                }
-            }
-        } catch (\Throwable $e) {
-            Log::error('WA Job Exception: ' . $e->getMessage(), ['id_pesanan' => $this->id_pesanan]);
-
-            // jika worker queue (bukan sync), re-throw supaya worker bisa retry
-            if (config('queue.default') !== 'sync') {
-                throw $e;
-            }
-
-            // jika sync (lokal), jangan throw => selesai
+            return;
         }
-    }
 
-    public function failed(\Throwable $exception)
-    {
-        // optional: dipanggil setelah job benar-benar gagal (exhausted retries)
-        Log::error('WA Job failed permanently', [
-            'id_pesanan' => $this->id_pesanan,
-            'error' => $exception->getMessage(),
+        // =====================================================
+        // 🛑 ANTI DUPLIKASI — JIKA STRUK SUDAH TERKIRIM, STOP
+        // =====================================================
+        if ($pesanan->receipt_sent_at) {
+            Log::warning('WA skipped: receipt already sent', [
+                'id_pesanan' => $pesanan->id_pesanan,
+                'sent_at'    => $pesanan->receipt_sent_at
+            ]);
+            return;
+        }
+
+        // 1️⃣ Generate image
+        $localImage = $generator->generateFromOrder($pesanan);
+        if (!$localImage) {
+            Log::error("SendWhatsappNotification: Failed generate receipt image", [
+                'id_pesanan' => $pesanan->id_pesanan
+            ]);
+            return;
+        }
+
+        // 2️⃣ Upload ke Cloudinary (PRIORITAS)
+        $publicUrl = $generator->uploadToCloudinary($localImage);
+        Log::info('Cloudinary upload result', [
+            'order_id' => $pesanan->id_pesanan,
+            'url'      => $publicUrl
         ]);
+
+        // 3️⃣ Fallback ke storage lokal (ngrok)
+        if (!$publicUrl) {
+            $publicUrl = $generator->storeToPublicUrl($localImage);
+            Log::info('Fallback to local storage URL', [
+                'order_id' => $pesanan->id_pesanan,
+                'url'      => $publicUrl
+            ]);
+        }
+
+        // hapus file lokal
+        @unlink($localImage);
+
+        // 4️⃣ Fallback terakhir (signed route)
+        if (!$publicUrl) {
+            $publicUrl = URL::temporarySignedRoute(
+                'receipt.show.signed',
+                now()->addHours(24),
+                ['id' => $pesanan->id_pesanan]
+            );
+        }
+
+        // 5️⃣ Build pesan
+        $message  = "Terima kasih telah memesan di Juragan 96 Resto 🍽️\n\n";
+        $message .= "No. Pesanan: {$pesanan->id_pesanan}\n";
+        $message .= "Nama: {$pesanan->nama_pelanggan}\n";
+        $message .= "Total: Rp " . number_format($pesanan->total_harga, 0, ',', '.') . "\n\n";
+        $message .= "📄 Lihat Struk Pesanan Anda di sini:\n{$publicUrl}\n\n";
+        $message .= "Jika ada kendala, silakan balas pesan ini.";
+
+        // 6️⃣ Kirim WA
+        $sent = WAService::kirim($pesanan->no_wa, $message);
+
+        if ($sent) {
+            $pesanan->update([
+                'receipt_sent_at' => now(),
+                'receipt_url'     => $publicUrl
+            ]);
+
+            Log::info("SendWhatsappNotification: sent", [
+                'id_pesanan' => $pesanan->id_pesanan
+            ]);
+        } else {
+            Log::error("SendWhatsappNotification: failed to send", [
+                'id_pesanan' => $pesanan->id_pesanan
+            ]);
+        }
     }
 }

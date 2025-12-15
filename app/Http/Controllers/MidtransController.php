@@ -135,13 +135,15 @@ class MidtransController extends Controller
     Log::info('Midtrans callback processed OK', ['id_pesanan'=>$pesanan->id_pesanan, 'status'=>$newStatus, 'transaction_id'=>$transactionId]);
 
     // Dispatch WA job dengan id pesanan (sync saat local)
-    if ($newStatus === 'proses') {
-        if (config('app.env') === 'local' || config('app.debug') === true) {
-            dispatch_sync(new \App\Jobs\SendWhatsappNotification($pesanan->id_pesanan));
-        } else {
-            \App\Jobs\SendWhatsappNotification::dispatch($pesanan->id_pesanan);
+   // Dispatch WA job dengan id pesanan (sync saat local)
+        if ($newStatus === 'proses') {
+            if (config('app.env') === 'local' || config('app.debug') === true) {
+                dispatch_sync(new \App\Jobs\SendWhatsappNotification($pesanan->id_pesanan));
+            } else {
+                \App\Jobs\SendWhatsappNotification::dispatch($pesanan->id_pesanan);
+            }
         }
-    }
+
 
     return response()->json(['message'=>'OK'], 200);
 }

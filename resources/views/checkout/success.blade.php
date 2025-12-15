@@ -30,9 +30,16 @@
                             </div>
                             <div class="col-md-6">
                                 <p><strong>Total:</strong> Rp {{ number_format($pesanan->total_harga, 0, ',', '.') }}</p>
+
+                                <!-- Metode bayar: tampilkan Midtrans jika pengguna datang dari popup midtrans -->
                                 <p><strong>Metode Bayar:</strong> 
-                                    {{ $pesanan->metode_pembayaran == 'cod' ? 'Bayar di Tempat' : 'Transfer Bank' }}
+                                    @if(request()->query('from_midtrans'))
+                                        Midtrans
+                                    @else
+                                        {{ $pesanan->metode_pembayaran == 'cod' ? 'Bayar di Tempat' : ($pesanan->metode_pembayaran ?? 'Transfer Bank') }}
+                                    @endif
                                 </p>
+
                                 <p><strong>Status Pesanan:</strong> 
                                     @if($pesanan->status == 'menunggu_pembayaran')
                                         <span class="badge bg-warning text-dark">Menunggu Pembayaran</span>
@@ -52,25 +59,7 @@
                             </div>
                         </div>
 
-                        @if($pesanan->metode_pembayaran == 'transfer')
-                        <div class="mt-3 p-3 bg-warning bg-opacity-10 rounded">
-                            <h6 class="fw-bold text-warning">
-                                <i class="fas fa-info-circle me-2"></i>
-                                Instruksi Pembayaran
-                            </h6>
-                            <p class="mb-2">Silakan transfer ke rekening berikut:</p>
-                            <p class="mb-1"><strong>Bank:</strong> BCA</p>
-                            <p class="mb-1"><strong>No. Rekening:</strong> 1234567890</p>
-                            <p class="mb-1"><strong>Atas Nama:</strong> JURAGAN 96</p>
-                            <p class="mb-0"><strong>Total:</strong> Rp {{ number_format($pesanan->total_harga, 0, ',', '.') }}</p>
-                            <p class="mb-0 mt-2 text-danger">
-                                <small>
-                                    <i class="fas fa-exclamation-triangle me-1"></i>
-                                    Pesanan akan diproses setelah pembayaran dikonfirmasi
-                                </small>
-                            </p>
-                        </div>
-                        @endif
+                        <!-- NOTE: seluruh instruksi transfer telah DIHAPUS sesuai permintaan -->
                     </div>
 
                     <!-- Order Items -->
@@ -81,9 +70,9 @@
                                 <thead>
                                     <tr>
                                         <th>Produk</th>
-                                        <th class="text-center">Qty</th>
-                                        <th class="text-end">Harga</th>
-                                        <th class="text-end">Subtotal</th>
+                                        <th class="text-center">Jumlah</th>
+                                        <!-- <th class="text-end">Harga</th> -->
+                                        <th class="text-end">Harga Satuan</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -103,15 +92,19 @@
                                             </div>
                                         </td>
                                         <td class="text-center">{{ $item->jumlah }}</td>
-                                        <td class="text-end">Rp {{ number_format($item->harga_satuan, 0, ',', '.') }}</td>
+                                         <!--<td class="text-end">Rp {{ number_format($item->harga_satuan, 0, ',', '.') }}</td> -->
                                         <td class="text-end">Rp {{ number_format($item->subtotal, 0, ',', '.') }}</td>
                                     </tr>
                                     @endforeach
                                 </tbody>
-                                <tfoot>
-                                    <tr>
-                                        <td colspan="3" class="text-end fw-bold">Total:</td>
-                                        <td class="text-end fw-bold text-success">Rp {{ number_format($pesanan->total_harga, 0, ',', '.') }}</td>
+                               <tfoot>
+                                    <tr class="table-light">
+                                        <td colspan="2" class="text-end fw-bold fs-5">
+                                            Total Harga
+                                        </td>
+                                        <td class="text-end fw-bold fs-5 text-success">
+                                            Rp {{ number_format($pesanan->total_harga, 0, ',', '.') }}
+                                        </td>
                                     </tr>
                                 </tfoot>
                             </table>
@@ -128,7 +121,7 @@
                             <i class="fas fa-list me-2"></i>
                             Lihat Pesanan Saya
                         </a>
-                        <a href="{{ route('keranjang') }}" class="btn btn-outline-secondary btn-lg">
+                        <a href="{{ route('menu-meja') }}" class="btn btn-outline-secondary btn-lg">
                             <i class="fas fa-home me-2"></i>
                             Kembali ke Home
                         </a>
@@ -138,7 +131,11 @@
                     <div class="mt-4">
                         <small class="text-muted">
                             <i class="fas fa-info-circle me-1"></i>
-                            @if($pesanan->metode_pembayaran == 'cod')
+
+                            @if(request()->query('from_midtrans'))
+                                <!-- User datang dari Midtrans popup -->
+                                Pembayaran melalui Midtrans berhasil / pending. Detail transaksi ditampilkan oleh Midtrans.
+                            @elseif($pesanan->metode_pembayaran == 'cod')
                                 Pesanan Anda sedang diproses. Kami akan mengirimkan notifikasi via WhatsApp.
                             @else
                                 Pesanan akan diproses setelah pembayaran dikonfirmasi.

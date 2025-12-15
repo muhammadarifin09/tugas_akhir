@@ -89,11 +89,13 @@
 
                 {{-- Tombol Bayar Sekarang (tampil hanya jika menunggu pembayaran & metode transfer) --}}
                 @if($p->status === 'menunggu_pembayaran' && ($p->metode_pembayaran ?? '') === 'transfer')
-                  <a href="{{ route('checkout.pay', $p->id_pesanan) }}"
-                    class="btn btn-sm btn-warning-modern"
+                 <a href="{{ route('checkout.pay', $p->id_pesanan) }}"
+                    class="btn btn-sm"
+                    style="border: 2px solid #000000ff; color: #000000ff; background-color: white;"
                     title="Bayar sekarang via Midtrans">
                     <i class="fas fa-credit-card me-1"></i> Bayar Sekarang
                   </a>
+
                 @endif
               </div>
             </div>

@@ -200,38 +200,66 @@
               </h3>
             </div>
             <div class="card-body">
+
+             <!-- Payment Method -->
               <!-- Payment Method -->
-              <div class="mb-4">
+            <div class="mb-4">
                 <h6 class="fw-bold mb-3">Metode Pembayaran <span class="text-danger">*</span></h6>
                 <div class="payment-options">
-                  <div class="form-check card-option mb-3">
-                    <input class="form-check-input" type="radio" name="metode_pembayaran" 
-                           value="cod" id="cod" {{ $keranjang->metode_pembayaran == 'cod' ? 'checked' : '' }} required>
-                    <label class="form-check-label w-100" for="cod">
-                      <div class="option-content">
-                        <i class="fas fa-money-bill-wave text-success option-icon"></i>
-                        <div>
-                          <h6 class="mb-1">Bayar di Tempat</h6>
-                          <small class="text-muted">Bayar saat pesanan diterima (COD)</small>
-                        </div>
-                      </div>
-                    </label>
-                  </div>
-                  <div class="form-check card-option">
-                    <input class="form-check-input" type="radio" name="metode_pembayaran" 
-                           value="transfer" id="transfer" {{ $keranjang->metode_pembayaran == 'transfer' ? 'checked' : '' }}>
-                    <label class="form-check-label w-100" for="transfer">
-                      <div class="option-content">
-                        <i class="fas fa-university text-primary option-icon"></i>
-                        <div>
-                          <h6 class="mb-1">Transfer Bank</h6>
-                          <small class="text-muted">Bayar melalui transfer bank</small>
-                        </div>
-                      </div>
-                    </label>
-                  </div>
+                    <div class="form-check card-option mb-3">
+                        <input class="form-check-input" type="radio" name="metode_pembayaran" 
+                              value="cod" id="cod" {{ $keranjang->metode_pembayaran == 'cod' ? 'checked' : '' }} required>
+                        <label class="form-check-label w-100" for="cod">
+                            <div class="option-content">
+                                <div class="d-flex align-items-start">
+                                    <div class="me-3">
+                                        <i class="fas fa-money-bill-wave text-success option-icon" 
+                                          style="font-size: 1.5rem; width: 40px; height: 40px; 
+                                                  display: flex; align-items: center; justify-content: center;
+                                                  border-radius: 10px; background: rgba(40, 167, 69, 0.1);"></i>
+                                    </div>
+                                    <div class="flex-grow-1">
+                                        <div class="d-flex justify-content-between align-items-center mb-1">
+                                            <h6 class="mb-0">Bayar di Tempat</h6>
+                                            
+                                        </div>
+                                        <p class="text-muted mb-2">Bayar saat pesanan diterima</p>
+                                        <div class="alert alert-danger alert-sm mb-0 py-2">
+                                            <div class="d-flex align-items-center">
+                                                <i class="fas fa-info-circle me-2"></i>
+                                                <small class="fw-medium">Jika bayar di tempat maka pesanan akan dimasak setelah melakukan pembayaran</small>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </label>
+                    </div>
+                    <div class="form-check card-option">
+                        <input class="form-check-input" type="radio" name="metode_pembayaran" 
+                              value="transfer" id="transfer" {{ $keranjang->metode_pembayaran == 'transfer' ? 'checked' : '' }}>
+                        <label class="form-check-label w-100" for="transfer">
+                            <div class="option-content">
+                                <div class="d-flex align-items-start">
+                                    <div class="me-3">
+                                        <i class="fas fa-university text-primary option-icon" 
+                                          style="font-size: 1.5rem; width: 40px; height: 40px; 
+                                                  display: flex; align-items: center; justify-content: center;
+                                                  border-radius: 10px; background: rgba(13, 110, 253, 0.1);"></i>
+                                    </div>
+                                    <div class="flex-grow-1">
+                                        <div class="d-flex justify-content-between align-items-center mb-1">
+                                            <h6 class="mb-0">Transfer Bank</h6>
+                                            <span class="badge bg-primary">Online</span>
+                                        </div>
+                                        <p class="text-muted mb-0">Bayar melalui transfer bank sebelum pesanan diproses</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </label>
+                    </div>
                 </div>
-              </div>
+            </div>
 
               <hr>
 
