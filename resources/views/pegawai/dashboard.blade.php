@@ -200,7 +200,7 @@
     <!-- Additional Features Row -->
     <div class="row g-4 mt-2">
         <!-- Quick Actions -->
-        <div class="col-12">
+        <!-- <div class="col-12">
             <div class="card card-modern border-0">
                 <div class="card-header-modern">
                     <h5 class="mb-0"><i class="fas fa-bolt me-2"></i>Aksi Cepat</h5>
@@ -234,7 +234,7 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div> -->
     </div>
 
 </div>

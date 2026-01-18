@@ -17,11 +17,13 @@ class Meja extends Model
 
     // Kolom yang boleh diisi (mass assignable)
     protected $fillable = [
-        'nomor_meja',
-        'status',
-        'waktu_tersedia',
-        'gambar',
-    ];
+    'nomor_meja',
+    'kapasitas',
+    'deskripsi',
+    'status',
+    'waktu_tersedia',
+    'gambar',
+];
 
     // Kalau primary key bukan increment integer standar
     public $incrementing = true;

@@ -10,11 +10,14 @@ use Illuminate\Validation\Rule;
 
 class MejaController extends Controller
 {
-    public function index()
+        public function index()
     {
-        $mejas = Meja::all();
-        return view('pegawai.meja.index', compact('mejas'));
+        $mejas = Meja::orderBy('nomor_meja')->paginate(10);
+        $nomorMejaTerpakai = Meja::pluck('nomor_meja')->toArray();
+
+        return view('pegawai.meja.index', compact('mejas', 'nomorMejaTerpakai'));
     }
+
 
     public function create()
     {
@@ -23,12 +26,15 @@ class MejaController extends Controller
 
     public function store(Request $request)
     {
-        $validated = $request->validate([
+            $validated = $request->validate([
             'nomor_meja' => 'required|unique:meja,nomor_meja',
+            'kapasitas' => 'required|integer|min:1',
+            'deskripsi' => 'nullable|string',
             'status' => 'required|in:tersedia,dipesan,sedang digunakan',
             'waktu_tersedia' => 'nullable|date',
             'gambar' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
         ]);
+
 
         // upload gambar
         if ($request->hasFile('gambar')) {
@@ -52,34 +58,34 @@ class MejaController extends Controller
         return view('pegawai.meja.edit', compact('meja'));
     }
 
-    public function update(Request $request, Meja $meja)
-    {
-        $validated = $request->validate([
-            'nomor_meja' => [
-                'required',
-                Rule::unique('meja', 'nomor_meja')->ignore($meja->id_meja, 'id_meja'),
-            ],
-            'status' => 'required|in:tersedia,dipesan,sedang digunakan',
-            'waktu_tersedia' => 'nullable|date',
-            'gambar' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
-        ]);
+   public function update(Request $request, Meja $meja)
+{
+    $validated = $request->validate([
+        'nomor_meja' => [
+            'required',
+            Rule::unique('meja', 'nomor_meja')->ignore($meja->id_meja, 'id_meja'),
+        ],
+        'kapasitas' => 'required|integer|min:1',
+        'deskripsi' => 'nullable|string',
+        'status' => 'required|in:tersedia,dipesan,sedang digunakan',
+        'waktu_tersedia' => 'nullable|date',
+        'gambar' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
+    ]);
 
-        // cek jika ada file baru
-        if ($request->hasFile('gambar')) {
-            // hapus gambar lama jika ada
-            if ($meja->gambar) {
-                Storage::disk('public')->delete($meja->gambar);
-            }
-
-            $path = $request->file('gambar')->store('meja', 'public');
-            $validated['gambar'] = $path;
+    if ($request->hasFile('gambar')) {
+        if ($meja->gambar) {
+            Storage::disk('public')->delete($meja->gambar);
         }
 
-        $meja->update($validated);
-
-        return redirect()->route('pegawai.meja.index')
-            ->with('success', 'Meja berhasil diperbarui');
+        $validated['gambar'] = $request->file('gambar')->store('meja', 'public');
     }
+
+    $meja->update($validated);
+
+    return redirect()->route('pegawai.meja.index')
+        ->with('success', 'Meja berhasil diperbarui');
+}
+
 
     public function destroy(Meja $meja)
     {

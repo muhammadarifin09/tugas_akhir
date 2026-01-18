@@ -148,3 +148,9 @@ Route::get('/receipt/signed/{id}', [PublicReceiptController::class, 'showSigned'
 // optional: public route if you saved image in storage (usually accessible via /storage/...)
 Route::get('/receipt/public/{id}', [PublicReceiptController::class, 'showPublic'])
     ->name('receipt.show.public');
+
+use App\Http\Controllers\Pegawai\DashboardController;
+
+Route::get('/pegawai/dashboard', [DashboardController::class, 'index'])
+    ->name('pegawai.dashboard');
+

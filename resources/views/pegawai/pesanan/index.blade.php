@@ -23,8 +23,6 @@
                             <th style="width: 50px;">No</th>
                             <th style="width: 180px;">Tanggal</th>
                             <th style="width: 180px;">Nama Pelanggan</th>
-                            <th style="width: 150px;">No. WhatsApp</th>
-                            <th style="width: 250px;">Alamat</th>
                             <th style="width: 150px;">Tipe Pesanan</th>
                             <th style="width: 90px;">No. Meja</th>
                             <th style="width: 210px;">Total Harga</th>
@@ -46,21 +44,8 @@
                                 {{-- Nama Pelanggan --}}
                                 <td>{{ $item->nama_pelanggan ?? '-' }}</td>
 
-                                {{-- Nomor WhatsApp --}}
-                                <td>
-                                    @if($item->no_wa)
-                                    <a href="https://wa.me/{{ $item->no_wa }}" 
-                                        target="_blank" 
-                                        class="btn btn-sm btn-success">
-                                        <i class="fab fa-whatsapp"></i> {{ $item->no_wa }}
-                                    </a>
-                                    @else
-                                        -
-                                    @endif
-                                </td>
-
-                                {{-- Alamat --}}
-                                <td>{{ $item->alamat ?? '-' }}</td>
+                      
+                                
 
                                 {{-- Tipe Pesanan --}}
                                 <td>
@@ -117,8 +102,8 @@
                                             <select name="status"
                                                 class="form-select form-select-sm shadow-sm"
                                                 onchange="this.form.submit()">
-                                                <option value="pending" {{ $item->status == 'pending' ? 'selected' : '' }}>Pending</option>
-                                                <option value="proses" {{ $item->status == 'proses' ? 'selected' : '' }}>Proses</option>
+                                                <!-- <option value="pending" {{ $item->status == 'pending' ? 'selected' : '' }}>Pending</option> -->
+                                                <!-- <option value="proses" {{ $item->status == 'proses' ? 'selected' : '' }}>Proses</option> -->
                                                 <option value="selesai" {{ $item->status == 'selesai' ? 'selected' : '' }}>Selesai</option>
                                                 <option value="batal" {{ $item->status == 'batal' ? 'selected' : '' }}>Batal</option>
                                             </select>
@@ -129,7 +114,7 @@
                             </tr>
                         @empty
                             <tr>
-                                <td colspan="10" class="text-center py-4 text-muted">
+                                <td colspan="8" class="text-center py-4 text-muted">
                                     <i class="fas fa-inbox fa-2x mb-2"></i><br>
                                     Belum ada data pesanan.
                                 </td>
@@ -216,10 +201,12 @@
                                 <th>Nomor WhatsApp</th>
                                 <td>{{ $item->no_wa ?? '-' }}</td>
                             </tr>
+                            @if($item->tipe_pesanan == 'dibawa_pulang')
                             <tr>
                                 <th>Alamat</th>
                                 <td>{{ $item->alamat ?? '-' }}</td>
                             </tr>
+                            @endif
                         </table>
                     </div>
                         <div class="table-responsive">
@@ -250,7 +237,7 @@
 
                     <div class="modal-footer bg-light d-flex justify-content-between">
                         <span class="fw-semibold text-muted">
-                            Tipe Pesanan: {{ $item->tipe }}
+                            Tipe Pesanan: {{ $item->tipe_pesanan }}
                         </span>
                         <strong class="text-dark fs-6">
                             Total: Rp {{ number_format($item->total_harga, 0, ',', '.') }}

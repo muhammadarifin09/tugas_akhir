@@ -12,17 +12,17 @@
         <ul class="nav nav-pills nav-justified" id="mainTab" role="tablist">
           <li class="nav-item" role="presentation">
             <button class="nav-link active" id="makanan-tab" data-bs-toggle="tab" data-bs-target="#makanan" type="button" role="tab">
-              <i class="fas fa-utensils me-2"></i>Makanan
+              <i class="fas fa-utensils me-2"></i>List Makanan
             </button>
           </li>
           <li class="nav-item" role="presentation">
             <button class="nav-link" id="minuman-tab" data-bs-toggle="tab" data-bs-target="#minuman" type="button" role="tab">
-              <i class="fas fa-coffee me-2"></i>Minuman
+              <i class="fas fa-coffee me-2"></i>List Minuman
             </button>
           </li>
           <li class="nav-item" role="presentation">
             <button class="nav-link" id="meja-tab" data-bs-toggle="tab" data-bs-target="#meja" type="button" role="tab">
-              <i class="fas fa-chair me-2"></i>Daftar Meja
+              <i class="fas fa-chair me-2"></i>List Meja
             </button>
           </li>
         </ul>
@@ -196,19 +196,31 @@
                   <div class="meja-icon mb-2">
                     <i class="fas fa-chair fa-2x {{ $meja->status == 'tersedia' ? 'text-success' : 'text-danger' }}"></i>
                   </div>
-                  <h5 class="fw-bold {{ $meja->status == 'tersedia' ? 'text-success' : 'text-danger' }}">Meja {{ $meja->nomor_meja }}</h5>
-                  
+
+                  <h5 class="fw-bold {{ $meja->status == 'tersedia' ? 'text-success' : 'text-danger' }}">
+                    Meja {{ $meja->nomor_meja }}
+                  </h5>
+
                   @if ($meja->status == 'tersedia')
                     <span class="badge bg-success">
                       <i class="fas fa-check me-1"></i> Tersedia
                     </span>
-                    <small class="text-muted d-block mt-1">Kapasitas: {{ $meja->kapasitas ?? 4 }} orang</small>
+                    <small class="text-muted d-block mt-1">
+                      Kapasitas: {{ $meja->kapasitas ?? 4 }} orang
+                    </small>
                   @else
                     <span class="badge bg-danger">
                       <i class="fas fa-times me-1"></i> Terpakai
                     </span>
                     <small class="text-muted d-block mt-1">Sedang digunakan</small>
                   @endif
+
+                  <!-- 🔍 TOMBOL DETAIL MEJA -->
+                  <button class="btn btn-sm btn-outline-info mt-2"
+                          data-bs-toggle="modal"
+                          data-bs-target="#detailMejaModal{{ $meja->id_meja }}">
+                    <i class="fas fa-info-circle"></i> Detail
+                  </button>
                 </div>
               </div>
             </div>
@@ -230,6 +242,66 @@
     </section>
   </div>
 </div>
+
+{{-- ================= MODAL DETAIL MEJA ================= --}}
+@foreach ($mejas as $meja)
+<div class="modal fade" id="detailMejaModal{{ $meja->id_meja }}" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content border-0 shadow">
+
+      <div class="modal-header bg-dark text-white">
+        <h5 class="modal-title">
+          <i class="fas fa-chair me-2"></i>
+          Detail Meja {{ $meja->nomor_meja }}
+        </h5>
+        <button class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+      </div>
+
+      <div class="modal-body text-center">
+
+        <img src="{{ $meja->gambar 
+            ? asset('storage/'.$meja->gambar) 
+            : asset('images/meja-default.png') }}"
+             class="img-fluid rounded mb-3"
+             style="max-height: 200px; object-fit: cover;">
+
+        <table class="table table-bordered text-start">
+          <tr>
+            <th width="40%">Nomor Meja</th>
+            <td>Meja {{ $meja->nomor_meja }}</td>
+          </tr>
+          <tr>
+            <th>Status</th>
+            <td>
+              <span class="badge {{ $meja->status == 'tersedia' ? 'bg-success' : 'bg-danger' }}">
+                {{ ucfirst($meja->status) }}
+              </span>
+            </td>
+          </tr>
+          <tr>
+            <th>Kapasitas</th>
+            <td>{{ $meja->kapasitas ?? 4 }} orang</td>
+          </tr>
+          <tr>
+            <th>Deskripsi</th>
+            <td>{{ $meja->deskripsi ?? 'Tidak ada deskripsi meja.' }}</td>
+          </tr>
+        </table>
+
+      </div>
+
+      <div class="modal-footer">
+        <button class="btn btn-secondary" data-bs-dismiss="modal">
+          <i class="fas fa-times me-1"></i> Tutup
+        </button>
+      </div>
+
+    </div>
+  </div>
+</div>
+@endforeach
+{{-- ================= END MODAL DETAIL MEJA ================= --}}
+
 
 <!-- Fixed Bottom Cart Section -->
 @auth
