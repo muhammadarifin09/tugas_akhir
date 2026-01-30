@@ -6,7 +6,7 @@
 <div class="container py-5 mt-4">
   <!-- Header Section -->
   <div class="text-center mb-5">
-    <h1 class="fw-bold gradient-text mb-3">📋 Riwayat Pesanan Saya</h1>
+    <h1 class="fw-bold gradient-text mb-3">Riwayat Pesanan Saya</h1>
     <p class="text-muted fs-5">Lihat semua pesanan yang pernah Anda buat di Juragan 96</p>
   </div>
 
@@ -185,8 +185,8 @@
 
 <style>
   :root {
-    --primary: #ffd700;
-    --primary-dark: #b39700;
+    --primary: #d94747;
+    --primary-dark: #d94747;
     --secondary: #000000;
     --dark: #1a1a1a;
     --light: #f8f9fa;

@@ -154,3 +154,26 @@ use App\Http\Controllers\Pegawai\DashboardController;
 Route::get('/pegawai/dashboard', [DashboardController::class, 'index'])
     ->name('pegawai.dashboard');
 
+
+use App\Http\Controllers\Pegawai\LaporanController;
+
+Route::middleware(['auth', 'role:pegawai'])->group(function () {
+    Route::get('/pegawai/laporan', [LaporanController::class, 'index'])
+        ->name('pegawai.laporan.index');
+});
+
+Route::get('/pegawai/laporan/pdf', [LaporanController::class, 'exportPdf'])
+    ->name('pegawai.laporan.pdf');
+
+Route::get('/pegawai/laporan/csv', 
+    [\App\Http\Controllers\Pegawai\LaporanController::class, 'exportCsv']
+)->name('pegawai.laporan.csv');
+
+// Route::post('/pegawai/laporan/arsip',
+//     [LaporanController::class, 'arsipBulk']
+// )->name('pegawai.laporan.arsip.bulk');
+
+Route::post('/pegawai/laporan/arsip', 
+    [LaporanController::class, 'arsip']
+)->name('pegawai.laporan.arsip');
+

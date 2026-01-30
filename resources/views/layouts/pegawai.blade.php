@@ -279,7 +279,7 @@
           </a>
         </li>
         <li class="nav-item">
-          <a href="" class="nav-link {{ request()->routeIs('pegawai.laporan.*') ? 'active' : '' }}">
+          <a href="{{ route('pegawai.laporan.index') }}" class="nav-link {{ request()->routeIs('pegawai.laporan.*') ? 'active' : '' }}">
             <i class="fas fa-chart-bar"></i>
             <span>Laporan</span>
           </a>
