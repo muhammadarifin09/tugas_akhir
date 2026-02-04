@@ -6,7 +6,7 @@
 <!-- Hero Section -->
 <section class="hero position-relative overflow-hidden">
   <div class="hero-slides">
-    @foreach(['resto2.jpg', 'ayam-lodho.jpg', 'nasgor.jpg', 'ayam-lodho.jpg'] as $image)
+    @foreach(['ayam-lodho.jpg', 'nasgor.jpg', 'ayam-lodho.jpg'] as $image)
     <div class="hero-slide" 
          style="background-image: url('{{ asset("img/$image") }}');"></div>
     @endforeach

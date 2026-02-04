@@ -744,13 +744,17 @@
             </a>
           </li>
 
-          <li class="nav-item">
-            <a class="nav-link-modern {{ request()->routeIs('keranjang') ? 'active' : '' }}"
-              href="{{ route('keranjang') }}">
-              <i class="fas fa-shopping-cart"></i>
-              <span>Keranjang</span>
-            </a>
-          </li>
+          @auth
+          @if(Auth::user()->role == 'pelanggan')
+            <li class="nav-item">
+              <a class="nav-link-modern {{ request()->routeIs('keranjang') ? 'active' : '' }}"
+                href="{{ route('keranjang') }}">
+                <i class="fas fa-shopping-cart"></i>
+                <span>Keranjang</span>
+              </a>
+            </li>
+          @endif
+          @endauth
 
           <li class="nav-item">
             <a class="nav-link-modern {{ request()->routeIs('menu-meja') ? 'active' : '' }}"

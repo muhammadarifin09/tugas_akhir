@@ -89,14 +89,42 @@ Route::middleware('auth')->group(function () {
 // =====================================
 // ROUTE ADMIN
 // =====================================
+use App\Http\Controllers\Admin\PesananController as AdminPesananController;
+use App\Http\Controllers\Admin\MejaController as AdminMejaController;
+
 Route::middleware(['auth', 'role:admin'])->group(function () {
 
-    Route::get('/admin', fn() => view('admin.dashboard'))->name('admin.dashboard');
+    Route::get('/admin', [AdminDashboardController::class, 'index'])
+        ->name('admin.dashboard');
 
-    Route::get('/admin/dashboard', [AdminDashboardController::class, 'index'])->name('admin.dashboard.index');
+    Route::resource('admin/pesanan', AdminPesananController::class)
+        ->names('admin.pesanan')
+        ->only(['index', 'show']);
+
+    Route::resource('admin/meja', AdminMejaController::class)
+        ->names('admin.meja')
+        ->only(['index', 'show']);
 
     Route::resource('akun', AkunController::class);
 });
+use App\Http\Controllers\Admin\LaporanController as AdminLaporanController;
+
+Route::middleware(['auth', 'role:admin'])->group(function () {
+
+    Route::get('/admin/laporan', [AdminLaporanController::class, 'index'])
+        ->name('admin.laporan.index');
+
+    Route::get('/admin/laporan/pdf', [AdminLaporanController::class, 'exportPdf'])
+        ->name('admin.laporan.pdf');
+
+    Route::get('/admin/laporan/csv', [AdminLaporanController::class, 'exportCsv'])
+        ->name('admin.laporan.csv');
+
+    Route::post('/admin/laporan/arsip', [AdminLaporanController::class, 'arsip'])
+        ->name('admin.laporan.arsip');
+});
+
+
 
 // =====================================
 // ROUTE PEGAWAI
@@ -177,3 +205,12 @@ Route::post('/pegawai/laporan/arsip',
     [LaporanController::class, 'arsip']
 )->name('pegawai.laporan.arsip');
 
+use App\Http\Controllers\Admin\ProdukController as AdminProdukController;
+
+Route::middleware(['auth', 'role:admin'])->group(function () {
+    Route::get('/admin/produk', [AdminProdukController::class, 'index'])
+        ->name('admin.produk.index');
+
+    Route::get('/admin/produk/{produk}', [AdminProdukController::class, 'show'])
+        ->name('admin.produk.show');
+});
