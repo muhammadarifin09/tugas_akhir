@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -16,57 +17,53 @@
   
   <style>
     :root {
-      --primary: #d4af37; /* Kuning emas lebih soft */
+      --primary: #ffd700; /* Kuning emas */
       --primary-dark: #b39700; /* Kuning tua */
-      --secondary: #1a1a1a; /* Hitam gelap */
-      --dark: #2d2d2d; /* Hitam lebih terang */
+      --secondary: #000000; /* Hitam */
+      --dark: #1a1a1a; /* Hitam gelap */
       --light: #f8f9fa;
       --transition: all 0.3s ease;
-      --red: #c41e3a; /* MERAH dari gambar */
-      --red-dark: #a0152e; /* Merah tua */
-      --red-light: #d94747; /* Merah muda */
-      --cream: #fffaf0; /* Warna cream untuk background */
-      --beige: #f5f5dc; /* Warna beige */
-      --gold-light: #f0e6d2; /* Emas muda */
-      --orange: #ff6b00; /* Oranye untuk aksen */
+      /* Variabel warna oranye */
+      --orange: #ff6b00;
+      --orange-dark: #e55a00;
+      --orange-light: #ff8c33;
     }
 
     body { 
       margin: 0; 
       padding: 0; 
-      color: #333;
+      color: #333; /* Ubah warna teks menjadi gelap untuk kontras dengan background putih */
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       padding-top: 70px;
-      background: var(--cream) !important;
+      background: #ffffff; /* UBAH: dari #1a1a1a (hitam) menjadi #ffffff (putih) */
     }
 
-    /* Modern Navbar - Skema Cream & Gold dengan aksen merah */
+    /* Modern Navbar - Kuning & Hitam */
     .navbar-modern {
-      background: linear-gradient(135deg, var(--cream) 0%, var(--beige) 100%) !important;
+      background: linear-gradient(135deg, var(--secondary) 0%, var(--dark) 100%) !important;
       backdrop-filter: blur(10px);
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); /* Ubah shadow menjadi lebih soft */
       padding: 0.8rem 0;
       position: fixed;
       top: 0;
       left: 0;
       right: 0;
       z-index: 1000;
-      border-bottom: 2px solid var(--red) !important; /* UBAH: Border merah */
+      border-bottom: 3px solid var(--primary) !important;
       transition: var(--transition);
     }
 
     .navbar-scrolled {
-      background: linear-gradient(135deg, rgba(255, 250, 240, 0.98) 0%, rgba(245, 245, 220, 0.98) 100%) !important;
+      background: linear-gradient(135deg, rgba(0, 0, 0, 0.98) 0%, rgba(26, 26, 26, 0.98) 100%) !important;
       backdrop-filter: blur(20px);
       padding: 0.5rem 0;
-      border-bottom: 2px solid var(--red-dark) !important;
     }
 
-    /* Logo dengan kombinasi gold dan merah */
+    /* PERBAIKAN: Logo konsisten kuning-orange di semua halaman */
     .navbar-brand-modern {
       font-size: 1.5rem;
       font-weight: 800;
-      background: linear-gradient(135deg, var(--red), var(--primary)) !important; /* KOMBINASI: Merah ke Gold */
+      background: linear-gradient(135deg, var(--primary), var(--orange)) !important;
       -webkit-background-clip: text !important;
       -webkit-text-fill-color: transparent !important;
       background-clip: text !important;
@@ -77,24 +74,18 @@
       transition: var(--transition);
     }
 
-    .navbar-brand-modern:hover {
-      background: linear-gradient(135deg, var(--red-dark), var(--primary-dark)) !important;
-      -webkit-background-clip: text !important;
-      -webkit-text-fill-color: transparent !important;
-    }
-
     @media (min-width: 992px) {
       .navbar-brand-modern {
         font-size: 1.8rem;
       }
     }
 
-    /* Hamburger Menu dengan warna merah */
+    /* Hamburger Menu HANYA tampil di mobile */
     .navbar-toggler-modern {
-      border: 2px solid var(--red) !important; /* UBAH: Border merah */
+      border: 2px solid var(--primary) !important;
       padding: 0.5rem 0.7rem !important;
       border-radius: 8px !important;
-      background: rgba(196, 30, 58, 0.1) !important; /* Background merah transparan */
+      background: rgba(255, 215, 0, 0.1) !important;
       transition: var(--transition);
       align-items: center !important;
       justify-content: center !important;
@@ -108,36 +99,34 @@
         display: flex !important;
         visibility: visible !important;
         opacity: 1 !important;
-        border: 2px solid var(--red) !important;
-        background: rgba(196, 30, 58, 0.15) !important;
+        border: 2px solid var(--primary) !important;
+        background: rgba(255, 215, 0, 0.15) !important;
       }
     }
 
     .navbar-toggler-modern:hover {
-      background: rgba(196, 30, 58, 0.2) !important;
+      background: rgba(255, 215, 0, 0.2) !important;
       transform: scale(1.05);
     }
 
     .navbar-toggler-modern:focus {
-      box-shadow: 0 0 0 3px rgba(196, 30, 58, 0.3) !important;
+      box-shadow: 0 0 0 3px rgba(255, 215, 0, 0.3) !important;
       outline: none !important;
     }
 
     .navbar-toggler-modern:not(.collapsed) {
-      background: rgba(196, 30, 58, 0.3) !important;
+      background: rgba(255, 215, 0, 0.3) !important;
     }
 
-    /* Icon toggler warna merah */
     .navbar-toggler-icon-modern {
-      background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba(196, 30, 58, 1)' stroke-linecap='round' stroke-miterlimit='10' stroke-width='3' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e") !important;
+      background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba(255, 215, 0, 1)' stroke-linecap='round' stroke-miterlimit='10' stroke-width='3' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e") !important;
       width: 24px !important;
       height: 24px !important;
       transition: var(--transition);
     }
 
-    /* Nav Links dengan warna gelap dan hover merah */
     .nav-link-modern {
-      color: var(--secondary) !important;
+      color: rgba(255, 255, 255, 0.9) !important;
       font-weight: 500;
       padding: 0.7rem 1.2rem !important;
       border-radius: 8px;
@@ -159,23 +148,23 @@
     }
 
     .nav-link-modern:hover {
-      color: var(--red) !important; /* UBAH: Hover merah */
-      background: rgba(196, 30, 58, 0.1); /* Background merah transparan */
+      color: var(--primary) !important;
+      background: rgba(255, 215, 0, 0.1);
       transform: translateY(-2px);
       text-decoration: none !important;
     }
 
-    /* Active Link - Red Gradient */
+    /* PERBAIKAN UTAMA: Gradasi ORANYE-KUNING dengan !important */
     .nav-link-modern.active {
       color: white !important;
-      background: linear-gradient(135deg, var(--red), var(--red-dark)) !important; /* UBAH: Gradient merah */
-      box-shadow: 0 4px 12px rgba(196, 30, 58, 0.4) !important;
+      background: linear-gradient(135deg, var(--orange), var(--primary)) !important;
+      box-shadow: 0 4px 12px rgba(255, 107, 0, 0.4) !important;
       text-decoration: none !important;
       border: none !important;
     }
 
     .nav-link-modern.active:hover {
-      background: linear-gradient(135deg, var(--red-dark), var(--red)) !important;
+      background: linear-gradient(135deg, var(--orange-dark), var(--primary-dark)) !important;
       color: white !important;
       transform: translateY(-2px);
     }
@@ -188,7 +177,7 @@
       flex-direction: column;
       width: 100%;
       padding: 1rem 0;
-      border-top: 1px solid rgba(196, 30, 58, 0.2); /* UBAH: Border merah */
+      border-top: 1px solid rgba(255, 215, 0, 0.2);
     }
 
     @media (min-width: 992px) {
@@ -215,39 +204,39 @@
       justify-content: center;
       cursor: pointer;
       transition: var(--transition);
-      border: 2.8px solid var(--red); /* UBAH: Border merah */
+      border: 2.8px solid rgba(255, 255, 255, 1);
     }
 
     .profile-icon:hover {
       transform: scale(1.1);
-      border-color: var(--red-dark);
-      box-shadow: 0 0 15px rgba(196, 30, 58, 0.5);
-      background: rgba(196, 30, 58, 0.1);
+      border-color: var(--primary);
+      box-shadow: 0 0 15px rgba(255, 215, 0, 0.5);
+      background: rgba(255, 255, 255, 0.1);
     }
 
     .profile-icon-simple {
       width: 24px;
       height: 24px;
-      color: var(--red); /* UBAH: Warna merah */
+      filter: invert(1); /* Membuat icon putih */
       opacity: 0.9;
       transition: var(--transition);
     }
 
     .profile-icon:hover .profile-icon-simple {
       opacity: 1;
-      color: var(--red-dark);
+      filter: invert(1) sepia(1) saturate(5) hue-rotate(0deg); /* Membuat icon kuning saat hover */
     }
 
     .dropdown-menu-profile {
       position: absolute;
       top: 100%;
       right: 0;
-      background: linear-gradient(135deg, var(--cream) 0%, var(--beige) 100%);
-      border: 1px solid rgba(196, 30, 58, 0.3); /* UBAH: Border merah */
+      background: linear-gradient(135deg, var(--secondary) 0%, var(--dark) 100%);
+      border: 1px solid rgba(255, 215, 0, 0.3);
       border-radius: 8px;
       padding: 0.5rem 0;
       min-width: 180px;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
       z-index: 1001;
       margin-top: 0.5rem;
       opacity: 0;
@@ -263,7 +252,7 @@
     }
 
     .dropdown-item-profile {
-      color: var(--secondary);
+      color: rgba(255, 255, 255, 0.9);
       padding: 0.7rem 1.2rem;
       text-decoration: none;
       display: flex;
@@ -277,26 +266,26 @@
     }
 
     .dropdown-item-profile:hover {
-      background: rgba(196, 30, 58, 0.1); /* UBAH: Background merah transparan */
-      color: var(--red);
+      background: rgba(255, 215, 0, 0.1);
+      color: var(--primary);
     }
 
     .dropdown-divider-profile {
       height: 1px;
-      background: rgba(196, 30, 58, 0.2); /* UBAH: Divider merah */
+      background: rgba(255, 215, 0, 0.2);
       margin: 0.3rem 0;
     }
 
-    /* Buttons dengan Red Theme - Sesuai gambar */
+    /* Buttons dengan Gradasi Oranye */
     .btn-primary-modern {
-      background: linear-gradient(135deg, var(--red), var(--red-dark)) !important; /* UBAH: Gradient merah */
+      background: linear-gradient(135deg, var(--orange), var(--orange-dark)) !important;
       border: none !important;
       border-radius: 8px;
       padding: 0.6rem 1.5rem;
       font-weight: 600;
       transition: var(--transition);
-      box-shadow: 0 4px 12px rgba(196, 30, 58, 0.3) !important;
-      color: white !important;
+      box-shadow: 0 4px 12px rgba(255, 107, 0, 0.3) !important;
+      color: white;
       width: 100%;
       text-align: center;
       text-decoration: none !important;
@@ -310,16 +299,16 @@
 
     .btn-primary-modern:hover {
       transform: translateY(-2px);
-      box-shadow: 0 6px 20px rgba(196, 30, 58, 0.5) !important;
-      background: linear-gradient(135deg, var(--red-dark), var(--red)) !important;
-      color: white !important;
+      box-shadow: 0 6px 20px rgba(255, 107, 0, 0.5) !important;
+      background: linear-gradient(135deg, var(--orange-dark), var(--orange)) !important;
+      color: white;
       text-decoration: none !important;
     }
 
-    /* Button Outline dengan Red */
+    /* PERBAIKAN: Tombol Register konsisten orange/kuning */
     .btn-outline-modern {
-      border: 2px solid var(--red) !important; /* UBAH: Border merah */
-      color: var(--red) !important; /* UBAH: Warna merah */
+      border: 2px solid var(--primary) !important;
+      color: var(--primary) !important;
       background: transparent !important;
       border-radius: 8px;
       padding: 0.6rem 1.5rem;
@@ -337,21 +326,49 @@
     }
 
     .btn-outline-modern:hover {
-      background: var(--red) !important; /* UBAH: Background merah */
-      color: white !important;
+      background: var(--primary) !important;
+      color: var(--secondary) !important;
       transform: translateY(-2px);
-      box-shadow: 0 4px 12px rgba(196, 30, 58, 0.3) !important;
+      box-shadow: 0 4px 12px rgba(255, 215, 0, 0.3) !important;
+      text-decoration: none !important;
+    }
+
+    .btn-danger-modern {
+      background: linear-gradient(135deg, var(--orange), var(--orange-dark)) !important;
+      border: none;
+      border-radius: 8px;
+      padding: 0.6rem 1.5rem;
+      font-weight: 600;
+      transition: var(--transition);
+      box-shadow: 0 4px 12px rgba(255, 107, 0, 0.3) !important;
+      color: white;
+      width: 100%;
+      text-align: center;
+      text-decoration: none !important;
+    }
+
+    @media (min-width: 992px) {
+      .btn-danger-modern {
+        width: auto;
+      }
+    }
+
+    .btn-danger-modern:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(255, 107, 0, 0.5) !important;
+      background: linear-gradient(135deg, var(--orange-dark), var(--orange)) !important;
+      color: white;
       text-decoration: none !important;
     }
 
     /* Mobile Menu */
     .navbar-collapse-modern {
-      background: linear-gradient(135deg, var(--cream) 0%, var(--beige) 100%);
+      background: linear-gradient(135deg, var(--secondary) 0%, var(--dark) 100%);
       border-radius: 12px;
       margin-top: 1rem;
       padding: 1rem;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-      border: 1px solid rgba(196, 30, 58, 0.2); /* UBAH: Border merah */
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1); /* Ubah shadow menjadi lebih soft */
+      border: 1px solid rgba(255, 215, 0, 0.2);
     }
 
     @media (min-width: 992px) {
@@ -376,20 +393,16 @@
       }
     }
 
-    /* Red Accents */
-    .red-accent {
-      color: var(--red) !important;
+    /* Additional Gold Accents */
+    .gold-accent {
+      color: var(--primary);
     }
 
-    .red-border {
-      border-color: var(--red) !important;
+    .gold-border {
+      border-color: var(--primary);
     }
 
-    .bg-red {
-      background-color: var(--red) !important;
-    }
-
-    /* Mobile Backdrop */
+    /* Mobile Backdrop HANYA di mobile */
     .navbar-backdrop {
       position: fixed;
       top: 0;
@@ -402,7 +415,6 @@
       visibility: hidden;
       transition: var(--transition);
       display: none;
-      pointer-events: none;
     }
 
     @media (max-width: 991.98px) {
@@ -414,19 +426,18 @@
     .navbar-backdrop.show {
       opacity: 1;
       visibility: visible;
-      pointer-events: auto;
     }
 
-    /* Hero Section - Skema Cream dengan aksen merah */
+    /* Hero Section */
     .hero {
       height: 100vh;
-      background: linear-gradient(135deg, var(--cream), var(--gold-light));
+      background: linear-gradient(135deg, #ffffff, #f8f9fa); /* UBAH: Background putih untuk hero */
       background-size: cover;
       background-position: center;
       display: flex;
       align-items: center;
       justify-content: center;
-      color: var(--secondary);
+      color: #333; /* UBAH: Warna teks menjadi gelap */
       text-align: center;
       position: relative;
       overflow: hidden;
@@ -439,7 +450,7 @@
       left: 0;
       right: 0;
       bottom: 0;
-      background: linear-gradient(135deg, rgba(255, 250, 240, 0.9), rgba(240, 230, 210, 0.9));
+      background: rgba(255, 255, 255, 0.8); /* UBAH: Overlay putih */
     }
 
     .hero-content {
@@ -453,8 +464,8 @@
       font-weight: 700;
       font-size: 3.5rem;
       margin-bottom: 1rem;
-      text-shadow: 2px 2px 8px rgba(0,0,0,0.1);
-      background: linear-gradient(135deg, var(--red), var(--primary)) !important; /* KOMBINASI: Merah ke Gold */
+      text-shadow: 2px 2px 8px rgba(0,0,0,0.1); /* UBAH: Shadow lebih soft */
+      background: linear-gradient(135deg, var(--primary), var(--orange)) !important;
       -webkit-background-clip: text !important;
       -webkit-text-fill-color: transparent !important;
       background-clip: text !important;
@@ -464,7 +475,7 @@
       font-size: 1.2rem;
       margin-bottom: 2rem;
       opacity: 0.8;
-      color: #666;
+      color: #666; /* UBAH: Warna teks lebih gelap */
     }
 
     .hero-buttons {
@@ -483,70 +494,36 @@
       text-decoration: none;
     }
 
-    /* Tombol Hero dengan warna merah */
     .btn-hero-primary {
-      background: linear-gradient(135deg, var(--red), var(--red-dark)) !important;
-      color: white !important;
+      background: linear-gradient(135deg, var(--orange), var(--orange-dark)) !important;
+      color: white;
       border: none;
-      box-shadow: 0 4px 15px rgba(196, 30, 58, 0.4) !important;
+      box-shadow: 0 4px 15px rgba(255, 107, 0, 0.4) !important;
     }
 
     .btn-hero-primary:hover {
       transform: translateY(-3px);
-      box-shadow: 0 8px 25px rgba(196, 30, 58, 0.6) !important;
-      color: white !important;
-      background: linear-gradient(135deg, var(--red-dark), var(--red)) !important;
+      box-shadow: 0 8px 25px rgba(255, 107, 0, 0.6) !important;
+      color: white;
+      background: linear-gradient(135deg, var(--orange-dark), var(--orange)) !important;
     }
 
     .btn-hero-secondary {
       background: transparent;
-      color: var(--red);
-      border: 2px solid var(--red);
+      color: var(--primary);
+      border: 2px solid var(--primary);
     }
 
     .btn-hero-secondary:hover {
-      background: var(--red);
-      color: white;
+      background: var(--primary);
+      color: var(--secondary);
       transform: translateY(-3px);
     }
 
     /* Main Content Area */
     main {
-      background: var(--cream) !important;
+      background: #ffffff; /* UBAH: Pastikan background main putih */
       min-height: calc(100vh - 70px);
-    }
-
-    /* Card dengan aksen merah */
-    .card-red {
-      border: 1px solid rgba(196, 30, 58, 0.3);
-      border-radius: 12px;
-      background: white;
-    }
-
-    .card-red-header {
-      background: linear-gradient(135deg, var(--red), var(--red-dark));
-      color: white;
-      padding: 1rem;
-      border-radius: 12px 12px 0 0;
-    }
-
-    /* Badge merah */
-    .badge-red {
-      background: linear-gradient(135deg, var(--red), var(--red-dark));
-      color: white;
-      padding: 0.35rem 0.75rem;
-      border-radius: 50rem;
-      font-weight: 600;
-    }
-
-    /* Footer dengan skema yang sama */
-    footer {
-      background: linear-gradient(135deg, var(--dark), var(--secondary)) !important;
-      color: var(--light);
-    }
-
-    footer hr {
-      border-color: rgba(196, 30, 58, 0.3);
     }
 
     /* Responsive Utilities */
@@ -565,7 +542,8 @@
       }
       
       .btn-primary-modern,
-      .btn-outline-modern {
+      .btn-outline-modern,
+      .btn-danger-modern {
         padding: 0.5rem 1rem;
         font-size: 0.9rem;
       }
@@ -639,25 +617,39 @@
       }
     }
 
-    /* Force override untuk konsistensi */
+    /* PERBAIKAN: Force override untuk semua elemen yang mungkin masih biru */
     .bg-primary, .btn-primary {
-      background: linear-gradient(135deg, var(--red), var(--red-dark)) !important;
-      border-color: var(--red) !important;
+      background: linear-gradient(135deg, var(--orange), var(--orange-dark)) !important;
+      border-color: var(--orange) !important;
     }
 
+    /* Reset semua background biru yang mungkin tersisa */
+    [class*="bg-"], [class*="btn-"] {
+      background-image: none !important;
+    }
+
+    /* PERBAIKAN: Override khusus untuk Bootstrap btn-outline-primary */
     .btn-outline-primary {
-      border-color: var(--red) !important;
-      color: var(--red) !important;
+      border-color: var(--primary) !important;
+      color: var(--primary) !important;
       background: transparent !important;
     }
 
     .btn-outline-primary:hover {
-      background: var(--red) !important;
-      color: white !important;
-      border-color: var(--red) !important;
+      background: var(--primary) !important;
+      color: var(--secondary) !important;
+      border-color: var(--primary) !important;
     }
 
-    /* Fix untuk backdrop */
+        /* FIX LINK TIDAK BISA DIKLIK */
+    .navbar-backdrop {
+      pointer-events: none !important;
+    }
+
+    .navbar-backdrop.show {
+      pointer-events: auto !important;
+    }
+
     .navbar-modern {
       z-index: 9999 !important;
     }
@@ -667,56 +659,27 @@
     }
 
     iframe {
-      pointer-events: none !important;
-    }
-
-    /* Tambahan untuk skema merah */
-    .text-red {
-      color: var(--red) !important;
-    }
-
-    .bg-red-light {
-      background-color: rgba(196, 30, 58, 0.1) !important;
-    }
-
-    .border-red {
-      border-color: var(--red) !important;
-    }
-
-    /* Highlight dengan warna merah */
-    .highlight-red {
-      position: relative;
-    }
-
-    .highlight-red::after {
-      content: '';
-      position: absolute;
-      bottom: -2px;
-      left: 0;
-      width: 100%;
-      height: 3px;
-      background: linear-gradient(135deg, var(--red), var(--red-dark));
-      border-radius: 2px;
-    }
+            pointer-events: none !important;
+        }
 
   </style>
 </head>
 
 <body>
 
-  <!-- Mobile Backdrop -->
+  <!-- Mobile Backdrop HANYA aktif di mobile -->
   <div class="navbar-backdrop" id="navbarBackdrop"></div>
 
-  <!-- Modern Navbar - Skema Cream dengan aksen Merah -->
+  <!-- Modern Navbar - Kuning & Hitam -->
   <nav class="navbar navbar-expand-lg navbar-modern" id="mainNavbar">
     <div class="container">
       <!-- Beranda -->
       <a class="navbar-brand-modern" href="{{ route('beranda') }}">
-        <i class="fas fa-crown red-accent"></i> <!-- UBAH: Icon merah -->
+        <i class="fas fa-crown gold-accent"></i>
         <span>JURAGAN 96</span>
       </a>
 
-      <!-- Hamburger Menu -->
+      <!-- Hamburger Menu HANYA tampil di mobile -->
       <button class="navbar-toggler navbar-toggler-modern" type="button" 
               data-bs-toggle="collapse" data-bs-target="#navbarModern"
               aria-controls="navbarModern" aria-expanded="false" 
@@ -744,17 +707,13 @@
             </a>
           </li>
 
-          @auth
-          @if(Auth::user()->role == 'pelanggan')
-            <li class="nav-item">
-              <a class="nav-link-modern {{ request()->routeIs('keranjang') ? 'active' : '' }}"
-                href="{{ route('keranjang') }}">
-                <i class="fas fa-shopping-cart"></i>
-                <span>Keranjang</span>
-              </a>
-            </li>
-          @endif
-          @endauth
+          <li class="nav-item">
+            <a class="nav-link-modern {{ request()->routeIs('keranjang') ? 'active' : '' }}"
+              href="{{ route('keranjang') }}">
+              <i class="fas fa-shopping-cart"></i>
+              <span>Keranjang</span>
+            </a>
+          </li>
 
           <li class="nav-item">
             <a class="nav-link-modern {{ request()->routeIs('menu-meja') ? 'active' : '' }}"
@@ -783,7 +742,7 @@
             <!-- Profile Dropdown -->
             <div class="profile-dropdown">
               <div class="profile-icon" id="profileDropdown">
-                <!-- Red Profile Icon -->
+                <!-- Simple White Profile Icon -->
                 <svg class="profile-icon-simple" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <path d="M12 12C14.2091 12 16 10.2091 16 8C16 5.79086 14.2091 4 12 4C9.79086 4 8 5.79086 8 8C8 10.2091 9.79086 12 12 12Z" fill="currentColor"/>
                   <path d="M12 14C9.33 14 4 15.34 4 18V20H20V18C20 15.34 14.67 14 12 14Z" fill="currentColor"/>
@@ -791,7 +750,7 @@
               </div>
               <div class="dropdown-menu-profile" id="dropdownMenu">
                 <div class="dropdown-item-profile">
-                  <i class="fas fa-user-circle me-2 red-accent"></i>
+                  <i class="fas fa-user-circle me-2"></i>
                   <span>{{ Auth::user()->name }}</span>
                 </div>
                 <div class="dropdown-divider-profile"></div>
@@ -814,6 +773,7 @@
               <i class="fas fa-sign-in-alt me-1"></i>
               <span>Login</span>
             </a>
+            <!-- PERBAIKAN: Pastikan tombol Register menggunakan class btn-outline-modern -->
             <a href="{{ route('register') }}" class="btn btn-outline-modern">
               <i class="fas fa-user-plus me-1"></i>
               <span>Register</span>
@@ -875,7 +835,40 @@
         });
       }
 
-      // Handle mobile features
+      // PERBAIKAN: Force remove any remaining blue colors dan konsistensi warna
+      function ensureColorConsistency() {
+        // Logo JURAGAN 96 - pastikan konsisten kuning-orange
+        const logo = document.querySelector('.navbar-brand-modern');
+        if (logo) {
+          logo.style.background = 'linear-gradient(135deg, #ffd700, #ff6b00) !important';
+          logo.style.webkitBackgroundClip = 'text !important';
+          logo.style.webkitTextFillColor = 'transparent !important';
+        }
+
+        // Tombol Register - pastikan konsisten
+        const registerBtn = document.querySelector('a[href*="register"]');
+        if (registerBtn) {
+          registerBtn.classList.add('btn-outline-modern');
+          registerBtn.classList.remove('btn-outline-primary');
+          registerBtn.style.borderColor = '#ffd700 !important';
+          registerBtn.style.color = '#ffd700 !important';
+          registerBtn.style.background = 'transparent !important';
+        }
+
+        // Remove any inline styles that might contain blue
+        document.querySelectorAll('.nav-link-modern.active').forEach(link => {
+          link.style.background = '';
+          link.style.backgroundImage = '';
+          link.style.backgroundColor = '';
+        });
+        
+        // Force apply our orange gradient
+        document.querySelectorAll('.nav-link-modern.active').forEach(link => {
+          link.classList.add('force-orange');
+        });
+      }
+
+      // Handle mobile features HANYA di mobile
       function handleMobileFeatures() {
         if (window.innerWidth < 992) {
           navbarBackdrop.addEventListener('click', function() {
@@ -909,7 +902,7 @@
         }
       }
 
-      // Toggle backdrop berdasarkan state navbar
+      // Toggle backdrop berdasarkan state navbar (HANYA di mobile)
       if (navbarCollapse) {
         navbarCollapse.addEventListener('show.bs.collapse', function() {
           if (window.innerWidth < 992) {
@@ -959,10 +952,10 @@
             dropdownMenu.classList.remove('show');
           }
         }
-        handleMobileFeatures();
       });
 
       // Initialize functions
+      ensureColorConsistency(); // Ganti removeBlueColors dengan ensureColorConsistency
       handleMobileFeatures();
       handleScroll();
       window.addEventListener('scroll', handleScroll);
@@ -984,74 +977,48 @@
         });
       });
 
-      // Apply red theme consistency
-      function applyRedTheme() {
-        // Force red theme on all elements
-        document.querySelectorAll('.btn-primary-modern').forEach(btn => {
-          btn.style.background = 'linear-gradient(135deg, #c41e3a, #a0152e) !important';
-        });
-        
-        document.querySelectorAll('.nav-link-modern.active').forEach(link => {
-          link.style.background = 'linear-gradient(135deg, #c41e3a, #a0152e) !important';
-        });
-        
-        // Apply red accent to crown icon
-        const crownIcon = document.querySelector('.fa-crown');
-        if (crownIcon) {
-          crownIcon.style.color = '#c41e3a !important';
-        }
-      }
-
-      // Apply on load and resize
-      window.addEventListener('load', applyRedTheme);
-      window.addEventListener('resize', applyRedTheme);
+      // Force apply styles after page load
+      setTimeout(ensureColorConsistency, 100);
+      setTimeout(ensureColorConsistency, 500);
       
-      // Apply theme after a short delay to ensure DOM is ready
-      setTimeout(applyRedTheme, 100);
+      // Juga apply ketika berpindah halaman
+      window.addEventListener('load', ensureColorConsistency);
     });
 
-    // Additional style untuk skema merah/cream
-    const themeStyle = document.createElement('style');
-    themeStyle.textContent = `
-      /* Pastikan skema merah/cream konsisten */
-      body, main, .navbar-modern, .navbar-collapse-modern {
-        background-color: #fffaf0 !important;
+    // Additional style untuk force override
+    const forceStyle = document.createElement('style');
+    forceStyle.textContent = `
+      .nav-link-modern.active.force-orange {
+        background: linear-gradient(135deg, #ff6b00, #ffd700) !important;
+        box-shadow: 0 4px 12px rgba(255, 107, 0, 0.4) !important;
       }
-      
-      .nav-link-modern {
-        color: #1a1a1a !important;
-      }
-      
       .nav-link-modern.active {
-        background: linear-gradient(135deg, #c41e3a, #a0152e) !important;
-        color: white !important;
+        background: linear-gradient(135deg, #ff6b00, #ffd700) !important;
       }
-      
-      .btn-primary-modern, .btn-hero-primary {
-        background: linear-gradient(135deg, #c41e3a, #a0152e) !important;
-        color: white !important;
-      }
-      
-      .btn-outline-modern, .btn-hero-secondary {
-        border-color: #c41e3a !important;
-        color: #c41e3a !important;
-      }
-      
-      .btn-outline-modern:hover, .btn-hero-secondary:hover {
-        background: #c41e3a !important;
-        color: white !important;
-      }
-      
       .navbar-brand-modern {
-        background: linear-gradient(135deg, #c41e3a, #d4af37) !important;
+        background: linear-gradient(135deg, #ffd700, #ff6b00) !important;
         -webkit-background-clip: text !important;
         -webkit-text-fill-color: transparent !important;
+        background-clip: text !important;
+      }
+      .btn-outline-modern, 
+      .btn-outline-primary {
+        border-color: #ffd700 !important;
+        color: #ffd700 !important;
+        background: transparent !important;
+      }
+      .btn-outline-modern:hover,
+      .btn-outline-primary:hover {
+        background: #ffd700 !important;
+        color: #000000 !important;
+        border-color: #ffd700 !important;
       }
       
-      .fa-crown {
-        color: #c41e3a !important;
+      /* Pastikan background utama putih */
+      body, main {
+        background-color: #ffffff !important;
       }
-      
+
       /* Profile dropdown responsive */
       @media (max-width: 991.98px) {
         .profile-dropdown {
@@ -1067,32 +1034,14 @@
           transform: translateX(-50%) translateY(-10px);
           width: 90%;
           max-width: 280px;
-          background: linear-gradient(135deg, #fffaf0, #f5f5dc) !important;
-          border: 1px solid rgba(196, 30, 58, 0.3) !important;
         }
         
         .dropdown-menu-profile.show {
           transform: translateX(-50%) translateY(0);
         }
       }
-      
-      /* Hero section gradient */
-      .hero {
-        background: linear-gradient(135deg, #fffaf0, #f0e6d2) !important;
-      }
-      
-      .hero-content h1 {
-        background: linear-gradient(135deg, #c41e3a, #d4af37) !important;
-        -webkit-background-clip: text !important;
-        -webkit-text-fill-color: transparent !important;
-      }
-      
-      /* Active state for nav links */
-      .nav-link-modern.active i {
-        color: white !important;
-      }
     `;
-    document.head.appendChild(themeStyle);
+    document.head.appendChild(forceStyle);
   </script>
   
 </body>
